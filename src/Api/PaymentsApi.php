@@ -1,7 +1,7 @@
 <?php
 /**
  * PaymentsApi
- * PHP version 7.2
+ * PHP version 7.3
  *
  * @category Class
  * @package  Paytrail\Payment
@@ -30,6 +30,7 @@ namespace Paytrail\Payment\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
@@ -171,6 +172,13 @@ class PaymentsApi
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
                     $e->getResponse() ? (string) $e->getResponse()->getBody() : null
                 );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
             }
 
             $statusCode = $response->getStatusCode();
@@ -197,6 +205,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\ActivateInvoiceResponse', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -209,6 +218,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -221,6 +231,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -233,6 +244,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -245,6 +257,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -259,6 +272,7 @@ class PaymentsApi
             }
 
             return [
+                $content,
                 ObjectSerializer::deserialize($content, $returnType, []),
                 $response->getStatusCode(),
                 $response->getHeaders()
@@ -496,7 +510,7 @@ class PaymentsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -512,7 +526,7 @@ class PaymentsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -576,6 +590,13 @@ class PaymentsApi
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
                     $e->getResponse() ? (string) $e->getResponse()->getBody() : null
                 );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
             }
 
             $statusCode = $response->getStatusCode();
@@ -602,6 +623,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\PaymentRequestResponse', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -614,6 +636,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -626,6 +649,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -638,6 +662,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -652,6 +677,7 @@ class PaymentsApi
             }
 
             return [
+                $content,
                 ObjectSerializer::deserialize($content, $returnType, []),
                 $response->getStatusCode(),
                 $response->getHeaders()
@@ -872,7 +898,7 @@ class PaymentsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -888,7 +914,7 @@ class PaymentsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -956,6 +982,13 @@ class PaymentsApi
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
                     $e->getResponse() ? (string) $e->getResponse()->getBody() : null
                 );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
             }
 
             $statusCode = $response->getStatusCode();
@@ -982,6 +1015,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\GroupedPaymentProvidersResponse', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -994,6 +1028,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1006,6 +1041,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1020,6 +1056,7 @@ class PaymentsApi
             }
 
             return [
+                $content,
                 ObjectSerializer::deserialize($content, $returnType, []),
                 $response->getStatusCode(),
                 $response->getHeaders()
@@ -1255,7 +1292,7 @@ class PaymentsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1271,7 +1308,7 @@ class PaymentsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1337,6 +1374,13 @@ class PaymentsApi
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
                     $e->getResponse() ? (string) $e->getResponse()->getBody() : null
                 );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
             }
 
             $statusCode = $response->getStatusCode();
@@ -1363,6 +1407,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Payment', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1375,6 +1420,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1387,6 +1433,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1399,6 +1446,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1411,6 +1459,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1425,6 +1474,7 @@ class PaymentsApi
             }
 
             return [
+                $content,
                 ObjectSerializer::deserialize($content, $returnType, []),
                 $response->getStatusCode(),
                 $response->getHeaders()
@@ -1662,7 +1712,7 @@ class PaymentsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1678,7 +1728,7 @@ class PaymentsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1744,6 +1794,13 @@ class PaymentsApi
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
                     $e->getResponse() ? (string) $e->getResponse()->getBody() : null
                 );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
             }
 
             $statusCode = $response->getStatusCode();
@@ -1770,6 +1827,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\BasePaymentMethodProvider[]', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1782,6 +1840,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1794,6 +1853,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -1808,6 +1868,7 @@ class PaymentsApi
             }
 
             return [
+                $content,
                 ObjectSerializer::deserialize($content, $returnType, []),
                 $response->getStatusCode(),
                 $response->getHeaders()
@@ -2029,7 +2090,7 @@ class PaymentsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2045,7 +2106,7 @@ class PaymentsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2113,6 +2174,13 @@ class PaymentsApi
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
                     $e->getResponse() ? (string) $e->getResponse()->getBody() : null
                 );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
             }
 
             $statusCode = $response->getStatusCode();
@@ -2139,6 +2207,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\RefundResponse', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -2151,6 +2220,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -2163,6 +2233,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -2175,6 +2246,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -2187,6 +2259,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -2199,6 +2272,7 @@ class PaymentsApi
                     }
 
                     return [
+                        $content,
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
@@ -2213,6 +2287,7 @@ class PaymentsApi
             }
 
             return [
+                $content,
                 ObjectSerializer::deserialize($content, $returnType, []),
                 $response->getStatusCode(),
                 $response->getHeaders()
@@ -2473,7 +2548,7 @@ class PaymentsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2489,7 +2564,7 @@ class PaymentsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

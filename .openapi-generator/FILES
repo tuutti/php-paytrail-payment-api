@@ -1,4 +1,3 @@
-.gitignore
 .php_cs
 .travis.yml
 README.md
