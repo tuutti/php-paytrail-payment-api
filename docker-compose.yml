@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: "openapi-generator"
+    image: "ghcr.io/tuutti/openapi-generator:latest"
+    volumes:
+      - .:/app:delegated
+    entrypoint:
+      - sh
