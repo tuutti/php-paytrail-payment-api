@@ -56,11 +56,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **transaction_id** | [**string**](../Model/.md)| Transaction ID of payment to activate invoice |
+ **transaction_id** | **string**| Transaction ID of payment to activate invoice |
  **checkout_account** | **int**| Merchant ID | [optional]
  **checkout_algorithm** | **string**| HMAC algorithm | [optional]
  **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_transaction_id** | [**string**](../Model/.md)| The same transaction ID as in route | [optional]
+ **checkout_transaction_id** | **string**| The same transaction ID as in route | [optional]
  **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
  **checkout_nonce** | **string**| Unique random identifier | [optional]
  **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
@@ -266,11 +266,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **transaction_id** | [**string**](../Model/.md)| Transaction ID of payment to fetch |
+ **transaction_id** | **string**| Transaction ID of payment to fetch |
  **checkout_account** | **int**| Merchant ID | [optional]
  **checkout_algorithm** | **string**| HMAC algorithm | [optional]
  **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_transaction_id** | [**string**](../Model/.md)| The same transaction ID as in route | [optional]
+ **checkout_transaction_id** | **string**| The same transaction ID as in route | [optional]
  **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
  **checkout_nonce** | **string**| Unique random identifier | [optional]
  **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
@@ -407,12 +407,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **transaction_id** | [**string**](../Model/.md)| Transaction ID of payment to refund |
+ **transaction_id** | **string**| Transaction ID of payment to refund |
  **refund** | [**\Paytrail\Payment\Model\Refund**](../Model/Refund.md)| Refund payload |
  **checkout_account** | **int**| Merchant ID | [optional]
  **checkout_algorithm** | **string**| HMAC algorithm | [optional]
  **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_transaction_id** | [**string**](../Model/.md)| The same transaction ID as in route | [optional]
+ **checkout_transaction_id** | **string**| The same transaction ID as in route | [optional]
  **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
  **checkout_nonce** | **string**| Unique random identifier | [optional]
  **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
