@@ -24,7 +24,7 @@ PHONY += build-client
 build-client: download-schema
 	@$(COMMAND) generate -c config.json -i paytrail-api.yaml -g php -o . --skip-validate-spec \
 		--git-host=github.com --git-repo-id=php-paytrail-payment-api --git-user-id=tuutti \
-		--global-property apiTests=false
+		--global-property apiTests=false -t templates
 
 default: build-client
 
