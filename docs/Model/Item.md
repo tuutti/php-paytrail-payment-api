@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **units** | **int** | Number of units |
 **vat_percentage** | **int** | Item VAT percentage |
 **product_code** | **string** | Merchant specific product code |
-**delivery_date** | **\DateTime** | Estimated delivery date | [optional]
+**delivery_date** | [**\DateTime**](\DateTime.md) | Estimated delivery date | [optional]
 **description** | **string** | Merchant specific product description | [optional]
 **category** | **string** | Item product category | [optional]
 **merchant** | **string** | Submerchant ID. Required for shop-in-shop payments, leave out from normal payments. | [optional]
