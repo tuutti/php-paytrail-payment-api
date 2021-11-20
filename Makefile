@@ -18,7 +18,7 @@ push-image:
 
 PHONY += download-schema
 download-schema:
-	@curl https://paytrail.github.io/api-documentation/paytrail-api.yaml > paytrail-api.yaml
+	@curl https://docs.paytrail.com/paytrail-api.yaml > paytrail-api.yaml
 
 PHONY += build-client
 build-client: download-schema

@@ -6,5 +6,4 @@ services:
     image: "ghcr.io/tuutti/openapi-generator:latest"
     volumes:
       - .:/app:delegated
-    entrypoint:
-      - sh
+    tty: true
