@@ -20,11 +20,11 @@ To install the bindings via [Composer](https://getcomposer.org/), add the follow
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/tuutti/php-paytrail-payment-api.git"
+      "url": "https://github.com/tuutti/php-paytrail-payments-api.git"
     }
   ],
   "require": {
-    "tuutti/php-paytrail-payment-api": "*@dev"
+    "tuutti/php-paytrail-payments-api": "*@dev"
   }
 }
 ```

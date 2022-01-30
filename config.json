@@ -1,8 +1,0 @@
-{
-    "invokerPackage": "Paytrail\\Payment",
-    "packagePath": "php-paytrail-payment-api",
-    "packageName": "php-paytrail-payment-api",
-    "srcBasePath": "src",
-    "composerVendorName": "php-paytrail-payment-api",
-    "composerProjectName": "client"
-}
