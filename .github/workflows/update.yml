@@ -6,8 +6,6 @@ on:
 jobs:
   update-definitions:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/tuutti/openapi-generator:latest
     steps:
       - uses: actions/checkout@v2
 
