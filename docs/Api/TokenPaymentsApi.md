@@ -1,17 +1,17 @@
 # Paytrail\Payment\TokenPaymentsApi
 
-All URIs are relative to https://services.paytrail.com.
+All URIs are relative to https://services.paytrail.com, except if the operation defines another base path.
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**addCardForm()**](TokenPaymentsApi.md#addCardForm) | **POST** /tokenization/addcard-form | Request a redirect to card addition form
-[**requestTokenForTokenizationId()**](TokenPaymentsApi.md#requestTokenForTokenizationId) | **POST** /tokenization/{checkout-tokenization-id} | Request a card token for given tokenization id
-[**tokenCitAuthorizationHold()**](TokenPaymentsApi.md#tokenCitAuthorizationHold) | **POST** /payments/token/cit/authorization-hold | Request customer initiated transaction authorization hold on token
-[**tokenCitCharge()**](TokenPaymentsApi.md#tokenCitCharge) | **POST** /payments/token/cit/charge | Request customer initiated transaction charge on token
-[**tokenCommit()**](TokenPaymentsApi.md#tokenCommit) | **POST** /payments/{transactionId}/token/commit | Request committing (charging) of previously created authorization hold on token
-[**tokenMitAuthorizationHold()**](TokenPaymentsApi.md#tokenMitAuthorizationHold) | **POST** /payments/token/mit/authorization-hold | Request merchant initiated transaction authorization hold on token
-[**tokenMitCharge()**](TokenPaymentsApi.md#tokenMitCharge) | **POST** /payments/token/mit/charge | Request merchant initiated transaction charge on token
-[**tokenRevert()**](TokenPaymentsApi.md#tokenRevert) | **POST** /payments/{transactionId}/token/revert | Revert (removal) of previously created authorization hold on token
+| Method | HTTP request | Description |
+| ------------- | ------------- | ------------- |
+| [**addCardForm()**](TokenPaymentsApi.md#addCardForm) | **POST** /tokenization/addcard-form | Request a redirect to card addition form |
+| [**requestTokenForTokenizationId()**](TokenPaymentsApi.md#requestTokenForTokenizationId) | **POST** /tokenization/{checkout-tokenization-id} | Request a card token for given tokenization id |
+| [**tokenCitAuthorizationHold()**](TokenPaymentsApi.md#tokenCitAuthorizationHold) | **POST** /payments/token/cit/authorization-hold | Request customer initiated transaction authorization hold on token |
+| [**tokenCitCharge()**](TokenPaymentsApi.md#tokenCitCharge) | **POST** /payments/token/cit/charge | Request customer initiated transaction charge on token |
+| [**tokenCommit()**](TokenPaymentsApi.md#tokenCommit) | **POST** /payments/{transactionId}/token/commit | Request committing (charging) of previously created authorization hold on token |
+| [**tokenMitAuthorizationHold()**](TokenPaymentsApi.md#tokenMitAuthorizationHold) | **POST** /payments/token/mit/authorization-hold | Request merchant initiated transaction authorization hold on token |
+| [**tokenMitCharge()**](TokenPaymentsApi.md#tokenMitCharge) | **POST** /payments/token/mit/charge | Request merchant initiated transaction charge on token |
+| [**tokenRevert()**](TokenPaymentsApi.md#tokenRevert) | **POST** /payments/{transactionId}/token/revert | Revert (removal) of previously created authorization hold on token |
 
 
 ## `addCardForm()`
@@ -48,9 +48,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **add_card_form_request** | [**\Paytrail\Payment\Model\AddCardFormRequest**](../Model/AddCardFormRequest.md)| Add card payload |
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **add_card_form_request** | [**\Paytrail\Payment\Model\AddCardFormRequest**](../Model/AddCardFormRequest.md)| Add card payload | |
 
 ### Return type
 
@@ -109,14 +109,14 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **checkout_nonce** | **string**| Unique random identifier | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 
@@ -176,15 +176,15 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| CIT authorization hold payload |
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **checkout_nonce** | **string**| Unique random identifier | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| CIT authorization hold payload | |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 
@@ -244,15 +244,15 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| CIT Charge payload |
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **checkout_nonce** | **string**| Unique random identifier | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| CIT Charge payload | |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 
@@ -312,15 +312,15 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| CIT commit payload |
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **checkout_nonce** | **string**| Unique random identifier | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| CIT commit payload | |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 
@@ -380,15 +380,15 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| MIT Charge payload |
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **checkout_nonce** | **string**| Unique random identifier | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| MIT Charge payload | |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 
@@ -448,15 +448,15 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| MIT Charge payload |
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **checkout_nonce** | **string**| Unique random identifier | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| MIT Charge payload | |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 
@@ -515,14 +515,14 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **checkout_nonce** | **string**| Unique random identifier | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 

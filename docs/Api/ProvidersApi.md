@@ -1,11 +1,11 @@
 # Paytrail\Payment\ProvidersApi
 
-All URIs are relative to https://services.paytrail.com.
+All URIs are relative to https://services.paytrail.com, except if the operation defines another base path.
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**getGroupedPaymentProviders()**](ProvidersApi.md#getGroupedPaymentProviders) | **GET** /merchants/grouped-payment-providers | List grouped merchant payment methods
-[**getPaymentProviders()**](ProvidersApi.md#getPaymentProviders) | **GET** /merchants/payment-providers | List merchant payment methods
+| Method | HTTP request | Description |
+| ------------- | ------------- | ------------- |
+| [**getGroupedPaymentProviders()**](ProvidersApi.md#getGroupedPaymentProviders) | **GET** /merchants/grouped-payment-providers | List grouped merchant payment methods |
+| [**getPaymentProviders()**](ProvidersApi.md#getPaymentProviders) | **GET** /merchants/payment-providers | List merchant payment methods |
 
 
 ## `getGroupedPaymentProviders()`
@@ -51,17 +51,17 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **checkout_nonce** | **string**| Unique random identifier | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
- **amount** | **int**| Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. | [optional]
- **groups** | [**string[]**](../Model/string.md)| Comma separated list of payment method groups to include in the reply. | [optional]
- **language** | **string**| Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
+| **amount** | **int**| Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. | [optional] |
+| **groups** | [**string[]**](../Model/string.md)| Comma separated list of payment method groups to include in the reply. | [optional] |
+| **language** | **string**| Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined | [optional] |
 
 ### Return type
 
@@ -122,16 +122,16 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **checkout_nonce** | **string**| Unique random identifier | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
- **amount** | **int**| Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. | [optional]
- **groups** | [**string[]**](../Model/string.md)| Comma separated list of payment method groups to include in the reply. | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
+| **amount** | **int**| Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. | [optional] |
+| **groups** | [**string[]**](../Model/string.md)| Comma separated list of payment method groups to include in the reply. | [optional] |
 
 ### Return type
 

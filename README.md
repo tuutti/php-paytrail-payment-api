@@ -9,7 +9,8 @@ For more information, please visit [https://github.com/paytrail/api-documentatio
 
 ### Requirements
 
-PHP 7.2 and later.
+PHP 7.4 and later.
+Should also work with PHP 8.0.
 
 ### Composer
 

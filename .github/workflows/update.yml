@@ -1,4 +1,4 @@
-name: Update 1.x OAS definitions
+name: Update 2.x OAS definitions
 on:
   workflow_dispatch:
   schedule:
@@ -22,4 +22,4 @@ jobs:
           author: actions-bot <actions-bot@users.noreply.github.com>
           commit-message: Update client
           title: Update definitions
-          branch: update-definitions-1.x
+          branch: update-definitions-2.x

@@ -1,11 +1,11 @@
 # Paytrail\Payment\PaymentReportsApi
 
-All URIs are relative to https://services.paytrail.com.
+All URIs are relative to https://services.paytrail.com, except if the operation defines another base path.
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**requestPaymentReport()**](PaymentReportsApi.md#requestPaymentReport) | **POST** /payments/report | Request a payment report
-[**requestPaymentReportBySettlementId()**](PaymentReportsApi.md#requestPaymentReportBySettlementId) | **POST** /settlements/{settlementId}/payments/report | Request a report of payments contained in a given settlement
+| Method | HTTP request | Description |
+| ------------- | ------------- | ------------- |
+| [**requestPaymentReport()**](PaymentReportsApi.md#requestPaymentReport) | **POST** /payments/report | Request a payment report |
+| [**requestPaymentReportBySettlementId()**](PaymentReportsApi.md#requestPaymentReportBySettlementId) | **POST** /settlements/{settlementId}/payments/report | Request a report of payments contained in a given settlement |
 
 
 ## `requestPaymentReport()`
@@ -48,14 +48,14 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **payment_report_request** | [**\Paytrail\Payment\Model\PaymentReportRequest**](../Model/PaymentReportRequest.md)| Payment body payload |
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **payment_report_request** | [**\Paytrail\Payment\Model\PaymentReportRequest**](../Model/PaymentReportRequest.md)| Payment body payload | |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 
@@ -115,15 +115,15 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **settlement_id** | **string**| Settlement ID |
- **payment_report_by_settlement_id_request** | [**\Paytrail\Payment\Model\PaymentReportBySettlementIdRequest**](../Model/PaymentReportBySettlementIdRequest.md)| Payment body payload |
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **settlement_id** | **string**| Settlement ID | |
+| **payment_report_by_settlement_id_request** | [**\Paytrail\Payment\Model\PaymentReportBySettlementIdRequest**](../Model/PaymentReportBySettlementIdRequest.md)| Payment body payload | |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 

@@ -1,10 +1,10 @@
 # Paytrail\Payment\SettlementsApi
 
-All URIs are relative to https://services.paytrail.com.
+All URIs are relative to https://services.paytrail.com, except if the operation defines another base path.
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**listSettlementIds()**](SettlementsApi.md#listSettlementIds) | **GET** /settlements | List settlement IDs
+| Method | HTTP request | Description |
+| ------------- | ------------- | ------------- |
+| [**listSettlementIds()**](SettlementsApi.md#listSettlementIds) | **GET** /settlements | List settlement IDs |
 
 
 ## `listSettlementIds()`
@@ -51,18 +51,18 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **start_date** | **\DateTime**| Filter out settlements created before given date. | [optional]
- **end_date** | **\DateTime**| Filter out settlements created after given date. | [optional]
- **bank_reference** | **string**| Only include settlements with the given bank reference | [optional]
- **limit** | **int**| Limit the number of settlement IDs returned | [optional]
- **submerchant** | **int**| Get submerchant&#39;s payment report | [optional]
- **checkout_account** | **int**| Merchant ID | [optional]
- **checkout_algorithm** | **string**| HMAC algorithm | [optional]
- **checkout_method** | **string**| HTTP method of the request | [optional]
- **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional]
- **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional]
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **start_date** | **\DateTime**| Filter out settlements created before given date. | [optional] |
+| **end_date** | **\DateTime**| Filter out settlements created after given date. | [optional] |
+| **bank_reference** | **string**| Only include settlements with the given bank reference | [optional] |
+| **limit** | **int**| Limit the number of settlement IDs returned | [optional] |
+| **submerchant** | **int**| Get submerchant&#39;s payment report | [optional] |
+| **checkout_account** | **int**| Merchant ID | [optional] |
+| **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
+| **checkout_method** | **string**| HTTP method of the request | [optional] |
+| **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
+| **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
 

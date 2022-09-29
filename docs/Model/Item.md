@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**unit_price** | **int** | Unit price of an item in currency minor unit, eg. EUR cents. VAT should be included in amount unless &#x60;usePricesWithoutVat&#x60; is set to true. |
+**unit_price** | **int** | Unit price of an item in currency minor unit, eg. EUR cents. VAT included. |
 **units** | **int** | Number of units |
 **vat_percentage** | **int** | Item VAT percentage |
 **product_code** | **string** | Merchant specific product code |
-**delivery_date** | [**\DateTime**](\DateTime.md) | Estimated delivery date | [optional]
+**delivery_date** | **\DateTime** | Estimated delivery date | [optional]
 **description** | **string** | Merchant specific product description | [optional]
 **category** | **string** | Item product category | [optional]
 **merchant** | **string** | Submerchant ID. Required for shop-in-shop payments, leave out from normal payments. | [optional]
