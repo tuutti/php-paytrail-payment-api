@@ -433,7 +433,7 @@ class Item implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets unit_price
      *
-     * @param int $unit_price Unit price of an item in currency minor unit, eg. EUR cents. VAT included.
+     * @param int $unit_price Unit price of an item in currency minor unit, eg. EUR cents. VAT should be included in amount unless `usePricesWithoutVat` is set to true.
      *
      * @return self
      */
