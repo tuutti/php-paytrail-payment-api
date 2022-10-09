@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**unit_price** | **int** | Unit price of an item in currency minor unit, eg. EUR cents. VAT should be included in amount unless &#x60;usePricesWithoutVat&#x60; is set to true. |
+**unit_price** | **int** | Unit price of an item in currency minor unit, eg. EUR cents. VAT included. |
 **units** | **int** | Number of units |
 **vat_percentage** | **int** | Item VAT percentage |
 **product_code** | **string** | Merchant specific product code |

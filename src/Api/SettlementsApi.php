@@ -214,7 +214,7 @@ class SettlementsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\SettlementIdItem[]', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -232,7 +232,7 @@ class SettlementsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -250,7 +250,7 @@ class SettlementsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -268,7 +268,7 @@ class SettlementsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -286,7 +286,7 @@ class SettlementsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -305,7 +305,7 @@ class SettlementsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -435,7 +435,7 @@ class SettlementsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];

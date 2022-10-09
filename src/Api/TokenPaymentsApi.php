@@ -463,7 +463,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\TokenizationRequestResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -481,7 +481,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -499,7 +499,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -517,7 +517,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -536,7 +536,7 @@ class TokenPaymentsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -648,7 +648,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -878,7 +878,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\TokenMITPaymentResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -896,7 +896,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\TokenCITPaymentResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -914,7 +914,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -932,7 +932,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -950,7 +950,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -969,7 +969,7 @@ class TokenPaymentsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -1093,7 +1093,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1337,7 +1337,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\TokenMITPaymentResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1355,7 +1355,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\TokenCITPaymentResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1373,7 +1373,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1391,7 +1391,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1409,7 +1409,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1428,7 +1428,7 @@ class TokenPaymentsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -1552,7 +1552,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1796,7 +1796,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\TokenMITPaymentResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1814,7 +1814,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1832,7 +1832,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1850,7 +1850,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -1869,7 +1869,7 @@ class TokenPaymentsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -1983,7 +1983,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2227,7 +2227,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\TokenMITPaymentResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2245,7 +2245,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2263,7 +2263,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2281,7 +2281,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2300,7 +2300,7 @@ class TokenPaymentsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -2414,7 +2414,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2658,7 +2658,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\TokenMITPaymentResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2676,7 +2676,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2694,7 +2694,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2712,7 +2712,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -2731,7 +2731,7 @@ class TokenPaymentsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -2845,7 +2845,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -3087,7 +3087,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\TokenMITPaymentResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -3105,7 +3105,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -3123,7 +3123,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -3141,7 +3141,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -3160,7 +3160,7 @@ class TokenPaymentsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -3272,7 +3272,7 @@ class TokenPaymentsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];

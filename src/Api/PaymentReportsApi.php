@@ -206,7 +206,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\PaymentReportRequestResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -224,7 +224,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -242,7 +242,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -260,7 +260,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -278,7 +278,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -297,7 +297,7 @@ class PaymentReportsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -419,7 +419,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -657,7 +657,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\PaymentReportRequestResponse', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -675,7 +675,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -693,7 +693,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -711,7 +711,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -729,7 +729,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, '\Paytrail\Payment\Model\Error', []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -748,7 +748,7 @@ class PaymentReportsApi
 
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
-                $content,
+                (string) $response->getBody(),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -872,7 +872,7 @@ class PaymentReportsApi
 
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
-                        $content,
+                        (string) $response->getBody(),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
