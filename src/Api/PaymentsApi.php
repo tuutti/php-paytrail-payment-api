@@ -69,7 +69,29 @@ class PaymentsApi
      */
     protected $hostIndex;
 
-    /**
+    /** @var string[] $contentTypes **/
+    public const contentTypes = [
+        'activateInvoiceByTransactionId' => [
+            'application/json',
+        ],
+        'createPayment' => [
+            'application/json',
+        ],
+        'getGroupedPaymentProviders' => [
+            'application/json',
+        ],
+        'getPaymentByTransactionId' => [
+            'application/json',
+        ],
+        'getPaymentProviders' => [
+            'application/json',
+        ],
+        'refundPaymentByTransactionId' => [
+            'application/json',
+        ],
+    ];
+
+/**
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
@@ -128,14 +150,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['activateInvoiceByTransactionId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\ActivateInvoiceResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function activateInvoiceByTransactionId($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function activateInvoiceByTransactionId($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['activateInvoiceByTransactionId'][0])
     {
-        list($response) = $this->activateInvoiceByTransactionIdWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->activateInvoiceByTransactionIdWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -152,14 +175,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['activateInvoiceByTransactionId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\ActivateInvoiceResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function activateInvoiceByTransactionIdWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function activateInvoiceByTransactionIdWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['activateInvoiceByTransactionId'][0])
     {
-        $request = $this->activateInvoiceByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->activateInvoiceByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -197,7 +221,6 @@ class PaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\ActivateInvoiceResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -214,8 +237,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -232,8 +253,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -250,8 +269,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 404:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -268,8 +285,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -286,7 +301,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\ActivateInvoiceResponse';
@@ -308,7 +322,6 @@ class PaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -317,8 +330,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -327,8 +338,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -337,8 +346,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -347,8 +354,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -357,7 +362,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -376,13 +380,14 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['activateInvoiceByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function activateInvoiceByTransactionIdAsync($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function activateInvoiceByTransactionIdAsync($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['activateInvoiceByTransactionId'][0])
     {
-        return $this->activateInvoiceByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->activateInvoiceByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -403,14 +408,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['activateInvoiceByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function activateInvoiceByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function activateInvoiceByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['activateInvoiceByTransactionId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\ActivateInvoiceResponse';
-        $request = $this->activateInvoiceByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->activateInvoiceByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -460,11 +466,12 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['activateInvoiceByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function activateInvoiceByTransactionIdRequest($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function activateInvoiceByTransactionIdRequest($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['activateInvoiceByTransactionId'][0])
     {
 
         // verify the required parameter 'transaction_id' is set
@@ -473,6 +480,7 @@ class PaymentsApi
                 'Missing the required parameter $transaction_id when calling activateInvoiceByTransactionId'
             );
         }
+
 
 
 
@@ -528,16 +536,11 @@ class PaymentsApi
         }
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (count($formParams) > 0) {
@@ -555,9 +558,9 @@ class PaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -598,14 +601,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\PaymentRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function createPayment($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function createPayment($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
-        list($response) = $this->createPaymentWithHttpInfo($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->createPaymentWithHttpInfo($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -621,14 +625,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\PaymentRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createPaymentWithHttpInfo($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function createPaymentWithHttpInfo($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
-        $request = $this->createPaymentRequest($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->createPaymentRequest($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -666,7 +671,6 @@ class PaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 201:
                     if ('\Paytrail\Payment\Model\PaymentRequestResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -683,8 +687,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -701,8 +703,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -719,8 +719,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -737,7 +735,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\PaymentRequestResponse';
@@ -759,7 +756,6 @@ class PaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -768,8 +764,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -778,8 +772,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -788,8 +780,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -798,7 +788,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -816,13 +805,14 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createPaymentAsync($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function createPaymentAsync($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
-        return $this->createPaymentAsyncWithHttpInfo($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->createPaymentAsyncWithHttpInfo($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -842,14 +832,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createPaymentAsyncWithHttpInfo($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function createPaymentAsyncWithHttpInfo($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
         $returnType = '\Paytrail\Payment\Model\PaymentRequestResponse';
-        $request = $this->createPaymentRequest($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->createPaymentRequest($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -898,11 +889,12 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createPaymentRequest($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function createPaymentRequest($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
 
         // verify the required parameter 'payment_request' is set
@@ -911,6 +903,7 @@ class PaymentsApi
                 'Missing the required parameter $payment_request when calling createPayment'
             );
         }
+
 
 
 
@@ -953,21 +946,17 @@ class PaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($payment_request)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($payment_request));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($payment_request));
             } else {
                 $httpBody = $payment_request;
             }
@@ -986,9 +975,9 @@ class PaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -1031,14 +1020,15 @@ class PaymentsApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\GroupedPaymentProvidersResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function getGroupedPaymentProviders($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProviders($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
-        list($response) = $this->getGroupedPaymentProvidersWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language);
+        list($response) = $this->getGroupedPaymentProvidersWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language, $contentType);
         return $response;
     }
 
@@ -1056,14 +1046,15 @@ class PaymentsApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\GroupedPaymentProvidersResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getGroupedPaymentProvidersWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProvidersWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
-        $request = $this->getGroupedPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language);
+        $request = $this->getGroupedPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1101,7 +1092,6 @@ class PaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\GroupedPaymentProvidersResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1118,8 +1108,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1136,8 +1124,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1154,7 +1140,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\GroupedPaymentProvidersResponse';
@@ -1176,7 +1161,6 @@ class PaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1185,8 +1169,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1195,8 +1177,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1205,7 +1185,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -1225,13 +1204,14 @@ class PaymentsApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getGroupedPaymentProvidersAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProvidersAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
-        return $this->getGroupedPaymentProvidersAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language)
+        return $this->getGroupedPaymentProvidersAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1253,14 +1233,15 @@ class PaymentsApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getGroupedPaymentProvidersAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProvidersAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
         $returnType = '\Paytrail\Payment\Model\GroupedPaymentProvidersResponse';
-        $request = $this->getGroupedPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language);
+        $request = $this->getGroupedPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1311,12 +1292,14 @@ class PaymentsApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getGroupedPaymentProvidersRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProvidersRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
+
 
 
 
@@ -1389,16 +1372,11 @@ class PaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (count($formParams) > 0) {
@@ -1416,9 +1394,9 @@ class PaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -1460,14 +1438,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\Payment|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function getPaymentByTransactionId($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function getPaymentByTransactionId($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
-        list($response) = $this->getPaymentByTransactionIdWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->getPaymentByTransactionIdWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -1484,14 +1463,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\Payment|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getPaymentByTransactionIdWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function getPaymentByTransactionIdWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
-        $request = $this->getPaymentByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->getPaymentByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1529,7 +1509,6 @@ class PaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\Payment' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1546,8 +1525,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1564,8 +1541,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1582,8 +1557,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 404:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1600,8 +1573,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1618,7 +1589,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\Payment';
@@ -1640,7 +1610,6 @@ class PaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1649,8 +1618,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1659,8 +1626,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1669,8 +1634,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1679,8 +1642,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1689,7 +1650,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -1708,13 +1668,14 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentByTransactionIdAsync($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function getPaymentByTransactionIdAsync($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
-        return $this->getPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->getPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1735,14 +1696,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function getPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\Payment';
-        $request = $this->getPaymentByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->getPaymentByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1792,11 +1754,12 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getPaymentByTransactionIdRequest($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function getPaymentByTransactionIdRequest($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
 
         // verify the required parameter 'transaction_id' is set
@@ -1805,6 +1768,7 @@ class PaymentsApi
                 'Missing the required parameter $transaction_id when calling getPaymentByTransactionId'
             );
         }
+
 
 
 
@@ -1860,16 +1824,11 @@ class PaymentsApi
         }
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (count($formParams) > 0) {
@@ -1887,9 +1846,9 @@ class PaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -1931,14 +1890,15 @@ class PaymentsApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\BasePaymentMethodProvider[]|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function getPaymentProviders($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProviders($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
-        list($response) = $this->getPaymentProvidersWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups);
+        list($response) = $this->getPaymentProvidersWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $contentType);
         return $response;
     }
 
@@ -1955,14 +1915,15 @@ class PaymentsApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\BasePaymentMethodProvider[]|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getPaymentProvidersWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProvidersWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
-        $request = $this->getPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups);
+        $request = $this->getPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2000,7 +1961,6 @@ class PaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\BasePaymentMethodProvider[]' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2017,8 +1977,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2035,8 +1993,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2053,7 +2009,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\BasePaymentMethodProvider[]';
@@ -2075,7 +2030,6 @@ class PaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2084,8 +2038,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2094,8 +2046,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2104,7 +2054,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -2123,13 +2072,14 @@ class PaymentsApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentProvidersAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProvidersAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
-        return $this->getPaymentProvidersAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups)
+        return $this->getPaymentProvidersAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2150,14 +2100,15 @@ class PaymentsApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentProvidersAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProvidersAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
         $returnType = '\Paytrail\Payment\Model\BasePaymentMethodProvider[]';
-        $request = $this->getPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups);
+        $request = $this->getPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2207,12 +2158,14 @@ class PaymentsApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getPaymentProvidersRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProvidersRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
+
 
 
 
@@ -2275,16 +2228,11 @@ class PaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (count($formParams) > 0) {
@@ -2302,9 +2250,9 @@ class PaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -2347,14 +2295,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\RefundResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function refundPaymentByTransactionId($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function refundPaymentByTransactionId($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
-        list($response) = $this->refundPaymentByTransactionIdWithHttpInfo($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->refundPaymentByTransactionIdWithHttpInfo($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -2372,14 +2321,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\RefundResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function refundPaymentByTransactionIdWithHttpInfo($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function refundPaymentByTransactionIdWithHttpInfo($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
-        $request = $this->refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2417,7 +2367,6 @@ class PaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 201:
                     if ('\Paytrail\Payment\Model\RefundResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2434,8 +2383,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2452,8 +2399,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2470,8 +2415,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 404:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2488,8 +2431,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 422:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2506,8 +2447,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2524,7 +2463,6 @@ class PaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\RefundResponse';
@@ -2546,7 +2484,6 @@ class PaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2555,8 +2492,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2565,8 +2500,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2575,8 +2508,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2585,8 +2516,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 422:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2595,8 +2524,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2605,7 +2532,6 @@ class PaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -2625,13 +2551,14 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function refundPaymentByTransactionIdAsync($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function refundPaymentByTransactionIdAsync($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
-        return $this->refundPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->refundPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2653,14 +2580,15 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function refundPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function refundPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\RefundResponse';
-        $request = $this->refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2711,11 +2639,12 @@ class PaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
 
         // verify the required parameter 'transaction_id' is set
@@ -2731,6 +2660,7 @@ class PaymentsApi
                 'Missing the required parameter $refund when calling refundPaymentByTransactionId'
             );
         }
+
 
 
 
@@ -2786,21 +2716,17 @@ class PaymentsApi
         }
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($refund)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($refund));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($refund));
             } else {
                 $httpBody = $refund;
             }
@@ -2819,9 +2745,9 @@ class PaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);

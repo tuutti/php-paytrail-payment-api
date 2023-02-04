@@ -69,7 +69,17 @@ class ProvidersApi
      */
     protected $hostIndex;
 
-    /**
+    /** @var string[] $contentTypes **/
+    public const contentTypes = [
+        'getGroupedPaymentProviders' => [
+            'application/json',
+        ],
+        'getPaymentProviders' => [
+            'application/json',
+        ],
+    ];
+
+/**
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
@@ -129,14 +139,15 @@ class ProvidersApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\GroupedPaymentProvidersResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function getGroupedPaymentProviders($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProviders($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
-        list($response) = $this->getGroupedPaymentProvidersWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language);
+        list($response) = $this->getGroupedPaymentProvidersWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language, $contentType);
         return $response;
     }
 
@@ -154,14 +165,15 @@ class ProvidersApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\GroupedPaymentProvidersResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getGroupedPaymentProvidersWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProvidersWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
-        $request = $this->getGroupedPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language);
+        $request = $this->getGroupedPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -199,7 +211,6 @@ class ProvidersApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\GroupedPaymentProvidersResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -216,8 +227,6 @@ class ProvidersApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -234,8 +243,6 @@ class ProvidersApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -252,7 +259,6 @@ class ProvidersApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\GroupedPaymentProvidersResponse';
@@ -274,7 +280,6 @@ class ProvidersApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -283,8 +288,6 @@ class ProvidersApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -293,8 +296,6 @@ class ProvidersApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -303,7 +304,6 @@ class ProvidersApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -323,13 +323,14 @@ class ProvidersApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getGroupedPaymentProvidersAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProvidersAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
-        return $this->getGroupedPaymentProvidersAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language)
+        return $this->getGroupedPaymentProvidersAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -351,14 +352,15 @@ class ProvidersApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getGroupedPaymentProvidersAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProvidersAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
         $returnType = '\Paytrail\Payment\Model\GroupedPaymentProvidersResponse';
-        $request = $this->getGroupedPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language);
+        $request = $this->getGroupedPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $language, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -409,12 +411,14 @@ class ProvidersApi
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
      * @param  string $language Language code of the language the terms of payment and the payment group names will be localized in. Defaults to FI if left undefined (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getGroupedPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getGroupedPaymentProvidersRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null)
+    public function getGroupedPaymentProvidersRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, $language = null, string $contentType = self::contentTypes['getGroupedPaymentProviders'][0])
     {
+
 
 
 
@@ -487,16 +491,11 @@ class ProvidersApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (count($formParams) > 0) {
@@ -514,9 +513,9 @@ class ProvidersApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -558,14 +557,15 @@ class ProvidersApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\BasePaymentMethodProvider[]|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function getPaymentProviders($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProviders($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
-        list($response) = $this->getPaymentProvidersWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups);
+        list($response) = $this->getPaymentProvidersWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $contentType);
         return $response;
     }
 
@@ -582,14 +582,15 @@ class ProvidersApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\BasePaymentMethodProvider[]|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getPaymentProvidersWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProvidersWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
-        $request = $this->getPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups);
+        $request = $this->getPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -627,7 +628,6 @@ class ProvidersApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\BasePaymentMethodProvider[]' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -644,8 +644,6 @@ class ProvidersApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -662,8 +660,6 @@ class ProvidersApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -680,7 +676,6 @@ class ProvidersApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\BasePaymentMethodProvider[]';
@@ -702,7 +697,6 @@ class ProvidersApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -711,8 +705,6 @@ class ProvidersApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -721,8 +713,6 @@ class ProvidersApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -731,7 +721,6 @@ class ProvidersApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -750,13 +739,14 @@ class ProvidersApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentProvidersAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProvidersAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
-        return $this->getPaymentProvidersAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups)
+        return $this->getPaymentProvidersAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -777,14 +767,15 @@ class ProvidersApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentProvidersAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProvidersAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
         $returnType = '\Paytrail\Payment\Model\BasePaymentMethodProvider[]';
-        $request = $this->getPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups);
+        $request = $this->getPaymentProvidersRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $amount, $groups, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -834,12 +825,14 @@ class ProvidersApi
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  int $amount Optional amount in minor unit (eg. EUR cents) for the payment providers. Some providers have minimum or maximum amounts that can be purchased. (optional)
      * @param  string[] $groups Comma separated list of payment method groups to include in the reply. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentProviders'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getPaymentProvidersRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null)
+    public function getPaymentProvidersRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, $amount = null, $groups = null, string $contentType = self::contentTypes['getPaymentProviders'][0])
     {
+
 
 
 
@@ -902,16 +895,11 @@ class ProvidersApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (count($formParams) > 0) {
@@ -929,9 +917,9 @@ class ProvidersApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
