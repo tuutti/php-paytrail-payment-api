@@ -69,7 +69,17 @@ class PaymentReportsApi
      */
     protected $hostIndex;
 
-    /**
+    /** @var string[] $contentTypes **/
+    public const contentTypes = [
+        'requestPaymentReport' => [
+            'application/json',
+        ],
+        'requestPaymentReportBySettlementId' => [
+            'application/json',
+        ],
+    ];
+
+/**
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
@@ -126,14 +136,15 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReport'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\PaymentReportRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function requestPaymentReport($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReport($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReport'][0])
     {
-        list($response) = $this->requestPaymentReportWithHttpInfo($payment_report_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature);
+        list($response) = $this->requestPaymentReportWithHttpInfo($payment_report_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType);
         return $response;
     }
 
@@ -148,14 +159,15 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReport'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\PaymentReportRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function requestPaymentReportWithHttpInfo($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReportWithHttpInfo($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReport'][0])
     {
-        $request = $this->requestPaymentReportRequest($payment_report_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature);
+        $request = $this->requestPaymentReportRequest($payment_report_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -193,7 +205,6 @@ class PaymentReportsApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\PaymentReportRequestResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -210,8 +221,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -228,8 +237,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -246,8 +253,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 404:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -264,8 +269,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -282,7 +285,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\PaymentReportRequestResponse';
@@ -304,7 +306,6 @@ class PaymentReportsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -313,8 +314,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -323,8 +322,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -333,8 +330,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -343,8 +338,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -353,7 +346,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -370,13 +362,14 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReport'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestPaymentReportAsync($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReportAsync($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReport'][0])
     {
-        return $this->requestPaymentReportAsyncWithHttpInfo($payment_report_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature)
+        return $this->requestPaymentReportAsyncWithHttpInfo($payment_report_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -395,14 +388,15 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReport'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestPaymentReportAsyncWithHttpInfo($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReportAsyncWithHttpInfo($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReport'][0])
     {
         $returnType = '\Paytrail\Payment\Model\PaymentReportRequestResponse';
-        $request = $this->requestPaymentReportRequest($payment_report_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature);
+        $request = $this->requestPaymentReportRequest($payment_report_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -450,11 +444,12 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReport'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function requestPaymentReportRequest($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReportRequest($payment_report_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReport'][0])
     {
 
         // verify the required parameter 'payment_report_request' is set
@@ -463,6 +458,7 @@ class PaymentReportsApi
                 'Missing the required parameter $payment_report_request when calling requestPaymentReport'
             );
         }
+
 
 
 
@@ -500,21 +496,17 @@ class PaymentReportsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($payment_report_request)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($payment_report_request));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($payment_report_request));
             } else {
                 $httpBody = $payment_report_request;
             }
@@ -533,9 +525,9 @@ class PaymentReportsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -576,14 +568,15 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReportBySettlementId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\PaymentReportRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function requestPaymentReportBySettlementId($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReportBySettlementId($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReportBySettlementId'][0])
     {
-        list($response) = $this->requestPaymentReportBySettlementIdWithHttpInfo($settlement_id, $payment_report_by_settlement_id_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature);
+        list($response) = $this->requestPaymentReportBySettlementIdWithHttpInfo($settlement_id, $payment_report_by_settlement_id_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType);
         return $response;
     }
 
@@ -599,14 +592,15 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReportBySettlementId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\PaymentReportRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function requestPaymentReportBySettlementIdWithHttpInfo($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReportBySettlementIdWithHttpInfo($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReportBySettlementId'][0])
     {
-        $request = $this->requestPaymentReportBySettlementIdRequest($settlement_id, $payment_report_by_settlement_id_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature);
+        $request = $this->requestPaymentReportBySettlementIdRequest($settlement_id, $payment_report_by_settlement_id_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -644,7 +638,6 @@ class PaymentReportsApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\PaymentReportRequestResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -661,8 +654,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -679,8 +670,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -697,8 +686,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 404:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -715,8 +702,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -733,7 +718,6 @@ class PaymentReportsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\PaymentReportRequestResponse';
@@ -755,7 +739,6 @@ class PaymentReportsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -764,8 +747,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -774,8 +755,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -784,8 +763,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -794,8 +771,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -804,7 +779,6 @@ class PaymentReportsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -822,13 +796,14 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReportBySettlementId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestPaymentReportBySettlementIdAsync($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReportBySettlementIdAsync($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReportBySettlementId'][0])
     {
-        return $this->requestPaymentReportBySettlementIdAsyncWithHttpInfo($settlement_id, $payment_report_by_settlement_id_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature)
+        return $this->requestPaymentReportBySettlementIdAsyncWithHttpInfo($settlement_id, $payment_report_by_settlement_id_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -848,14 +823,15 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReportBySettlementId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestPaymentReportBySettlementIdAsyncWithHttpInfo($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReportBySettlementIdAsyncWithHttpInfo($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReportBySettlementId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\PaymentReportRequestResponse';
-        $request = $this->requestPaymentReportBySettlementIdRequest($settlement_id, $payment_report_by_settlement_id_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature);
+        $request = $this->requestPaymentReportBySettlementIdRequest($settlement_id, $payment_report_by_settlement_id_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -904,11 +880,12 @@ class PaymentReportsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestPaymentReportBySettlementId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function requestPaymentReportBySettlementIdRequest($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function requestPaymentReportBySettlementIdRequest($settlement_id, $payment_report_by_settlement_id_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['requestPaymentReportBySettlementId'][0])
     {
 
         // verify the required parameter 'settlement_id' is set
@@ -924,6 +901,7 @@ class PaymentReportsApi
                 'Missing the required parameter $payment_report_by_settlement_id_request when calling requestPaymentReportBySettlementId'
             );
         }
+
 
 
 
@@ -969,21 +947,17 @@ class PaymentReportsApi
         }
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($payment_report_by_settlement_id_request)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($payment_report_by_settlement_id_request));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($payment_report_by_settlement_id_request));
             } else {
                 $httpBody = $payment_report_by_settlement_id_request;
             }
@@ -1002,9 +976,9 @@ class PaymentReportsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);

@@ -69,7 +69,35 @@ class TokenPaymentsApi
      */
     protected $hostIndex;
 
-    /**
+    /** @var string[] $contentTypes **/
+    public const contentTypes = [
+        'addCardForm' => [
+            'application/json',
+        ],
+        'requestTokenForTokenizationId' => [
+            'application/json',
+        ],
+        'tokenCitAuthorizationHold' => [
+            'application/json',
+        ],
+        'tokenCitCharge' => [
+            'application/json',
+        ],
+        'tokenCommit' => [
+            'application/json',
+        ],
+        'tokenMitAuthorizationHold' => [
+            'application/json',
+        ],
+        'tokenMitCharge' => [
+            'application/json',
+        ],
+        'tokenRevert' => [
+            'application/json',
+        ],
+    ];
+
+/**
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
@@ -121,14 +149,15 @@ class TokenPaymentsApi
      * Request a redirect to card addition form
      *
      * @param  \Paytrail\Payment\Model\AddCardFormRequest $add_card_form_request Add card payload (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addCardForm'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function addCardForm($add_card_form_request)
+    public function addCardForm($add_card_form_request, string $contentType = self::contentTypes['addCardForm'][0])
     {
-        $this->addCardFormWithHttpInfo($add_card_form_request);
+        $this->addCardFormWithHttpInfo($add_card_form_request, $contentType);
     }
 
     /**
@@ -137,14 +166,15 @@ class TokenPaymentsApi
      * Request a redirect to card addition form
      *
      * @param  \Paytrail\Payment\Model\AddCardFormRequest $add_card_form_request Add card payload (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addCardForm'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function addCardFormWithHttpInfo($add_card_form_request)
+    public function addCardFormWithHttpInfo($add_card_form_request, string $contentType = self::contentTypes['addCardForm'][0])
     {
-        $request = $this->addCardFormRequest($add_card_form_request);
+        $request = $this->addCardFormRequest($add_card_form_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -185,8 +215,6 @@ class TokenPaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -195,8 +223,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -205,8 +231,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -215,7 +239,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -227,13 +250,14 @@ class TokenPaymentsApi
      * Request a redirect to card addition form
      *
      * @param  \Paytrail\Payment\Model\AddCardFormRequest $add_card_form_request Add card payload (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addCardForm'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function addCardFormAsync($add_card_form_request)
+    public function addCardFormAsync($add_card_form_request, string $contentType = self::contentTypes['addCardForm'][0])
     {
-        return $this->addCardFormAsyncWithHttpInfo($add_card_form_request)
+        return $this->addCardFormAsyncWithHttpInfo($add_card_form_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -247,14 +271,15 @@ class TokenPaymentsApi
      * Request a redirect to card addition form
      *
      * @param  \Paytrail\Payment\Model\AddCardFormRequest $add_card_form_request Add card payload (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addCardForm'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function addCardFormAsyncWithHttpInfo($add_card_form_request)
+    public function addCardFormAsyncWithHttpInfo($add_card_form_request, string $contentType = self::contentTypes['addCardForm'][0])
     {
         $returnType = '';
-        $request = $this->addCardFormRequest($add_card_form_request);
+        $request = $this->addCardFormRequest($add_card_form_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -283,11 +308,12 @@ class TokenPaymentsApi
      * Create request for operation 'addCardForm'
      *
      * @param  \Paytrail\Payment\Model\AddCardFormRequest $add_card_form_request Add card payload (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addCardForm'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function addCardFormRequest($add_card_form_request)
+    public function addCardFormRequest($add_card_form_request, string $contentType = self::contentTypes['addCardForm'][0])
     {
 
         // verify the required parameter 'add_card_form_request' is set
@@ -296,6 +322,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $add_card_form_request when calling addCardForm'
             );
         }
+
 
         $resourcePath = '/tokenization/addcard-form';
         $formParams = [];
@@ -308,21 +335,17 @@ class TokenPaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($add_card_form_request)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($add_card_form_request));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($add_card_form_request));
             } else {
                 $httpBody = $add_card_form_request;
             }
@@ -341,9 +364,9 @@ class TokenPaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -383,14 +406,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenizationRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function requestTokenForTokenizationId($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function requestTokenForTokenizationId($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        list($response) = $this->requestTokenForTokenizationIdWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->requestTokenForTokenizationIdWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -405,14 +429,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenizationRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function requestTokenForTokenizationIdWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function requestTokenForTokenizationIdWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        $request = $this->requestTokenForTokenizationIdRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->requestTokenForTokenizationIdRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -450,7 +475,6 @@ class TokenPaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\TokenizationRequestResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -467,8 +491,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -485,8 +507,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -503,8 +523,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 403:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -521,7 +539,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\TokenizationRequestResponse';
@@ -543,7 +560,6 @@ class TokenPaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -552,8 +568,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -562,8 +576,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -572,8 +584,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -582,7 +592,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -599,13 +608,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestTokenForTokenizationIdAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function requestTokenForTokenizationIdAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        return $this->requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -624,14 +634,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenizationRequestResponse';
-        $request = $this->requestTokenForTokenizationIdRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->requestTokenForTokenizationIdRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -679,12 +690,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function requestTokenForTokenizationIdRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function requestTokenForTokenizationIdRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
+
 
 
 
@@ -727,16 +740,11 @@ class TokenPaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (count($formParams) > 0) {
@@ -754,9 +762,9 @@ class TokenPaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -797,14 +805,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\TokenCITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenCitAuthorizationHold($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitAuthorizationHold($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
-        list($response) = $this->tokenCitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->tokenCitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -820,14 +829,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\TokenCITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenCitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
-        $request = $this->tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -865,7 +875,6 @@ class TokenPaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 201:
                     if ('\Paytrail\Payment\Model\TokenMITPaymentResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -882,8 +891,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 403:
                     if ('\Paytrail\Payment\Model\TokenCITPaymentResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -900,8 +907,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -918,8 +923,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -936,8 +939,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -954,7 +955,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
@@ -976,7 +976,6 @@ class TokenPaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -985,8 +984,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -995,8 +992,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1005,8 +1000,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1015,8 +1008,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1025,7 +1016,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -1043,13 +1033,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCitAuthorizationHoldAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitAuthorizationHoldAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
-        return $this->tokenCitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->tokenCitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1069,14 +1060,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1125,11 +1117,12 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
 
         // verify the required parameter 'token_payment_request' is set
@@ -1138,6 +1131,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenCitAuthorizationHold'
             );
         }
+
 
 
 
@@ -1180,21 +1174,17 @@ class TokenPaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($token_payment_request)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
             } else {
                 $httpBody = $token_payment_request;
             }
@@ -1213,9 +1203,9 @@ class TokenPaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -1256,14 +1246,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\TokenCITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenCitCharge($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitCharge($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
-        list($response) = $this->tokenCitChargeWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->tokenCitChargeWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -1279,14 +1270,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\TokenCITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenCitChargeWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitChargeWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
-        $request = $this->tokenCitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenCitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1324,7 +1316,6 @@ class TokenPaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 201:
                     if ('\Paytrail\Payment\Model\TokenMITPaymentResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1341,8 +1332,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 403:
                     if ('\Paytrail\Payment\Model\TokenCITPaymentResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1359,8 +1348,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1377,8 +1364,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1395,8 +1380,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1413,7 +1396,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
@@ -1435,7 +1417,6 @@ class TokenPaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1444,8 +1425,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1454,8 +1433,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1464,8 +1441,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1474,8 +1449,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1484,7 +1457,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -1502,13 +1474,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCitChargeAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitChargeAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
-        return $this->tokenCitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->tokenCitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1528,14 +1501,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenCitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenCitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1584,11 +1558,12 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenCitChargeRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCitChargeRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
 
         // verify the required parameter 'token_payment_request' is set
@@ -1597,6 +1572,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenCitCharge'
             );
         }
+
 
 
 
@@ -1639,21 +1615,17 @@ class TokenPaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($token_payment_request)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
             } else {
                 $httpBody = $token_payment_request;
             }
@@ -1672,9 +1644,9 @@ class TokenPaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -1715,14 +1687,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenCommit($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCommit($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
-        list($response) = $this->tokenCommitWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->tokenCommitWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -1738,14 +1711,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenCommitWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCommitWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
-        $request = $this->tokenCommitRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenCommitRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1783,7 +1757,6 @@ class TokenPaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 201:
                     if ('\Paytrail\Payment\Model\TokenMITPaymentResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1800,8 +1773,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1818,8 +1789,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1836,8 +1805,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -1854,7 +1821,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
@@ -1876,7 +1842,6 @@ class TokenPaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1885,8 +1850,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1895,8 +1858,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1905,8 +1866,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -1915,7 +1874,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -1933,13 +1891,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCommitAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCommitAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
-        return $this->tokenCommitAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->tokenCommitAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1959,14 +1918,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCommitAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCommitAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenCommitRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenCommitRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2015,11 +1975,12 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenCommitRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenCommitRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
 
         // verify the required parameter 'token_payment_request' is set
@@ -2028,6 +1989,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenCommit'
             );
         }
+
 
 
 
@@ -2070,21 +2032,17 @@ class TokenPaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($token_payment_request)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
             } else {
                 $httpBody = $token_payment_request;
             }
@@ -2103,9 +2061,9 @@ class TokenPaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -2146,14 +2104,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenMitAuthorizationHold($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitAuthorizationHold($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
-        list($response) = $this->tokenMitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->tokenMitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -2169,14 +2128,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenMitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
-        $request = $this->tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2214,7 +2174,6 @@ class TokenPaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 201:
                     if ('\Paytrail\Payment\Model\TokenMITPaymentResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2231,8 +2190,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2249,8 +2206,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2267,8 +2222,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2285,7 +2238,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
@@ -2307,7 +2259,6 @@ class TokenPaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2316,8 +2267,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2326,8 +2275,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2336,8 +2283,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2346,7 +2291,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -2364,13 +2308,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenMitAuthorizationHoldAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitAuthorizationHoldAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
-        return $this->tokenMitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->tokenMitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2390,14 +2335,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenMitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2446,11 +2392,12 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
 
         // verify the required parameter 'token_payment_request' is set
@@ -2459,6 +2406,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenMitAuthorizationHold'
             );
         }
+
 
 
 
@@ -2501,21 +2449,17 @@ class TokenPaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($token_payment_request)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
             } else {
                 $httpBody = $token_payment_request;
             }
@@ -2534,9 +2478,9 @@ class TokenPaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -2577,14 +2521,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenMitCharge($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitCharge($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
-        list($response) = $this->tokenMitChargeWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->tokenMitChargeWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -2600,14 +2545,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenMitChargeWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitChargeWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
-        $request = $this->tokenMitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenMitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2645,7 +2591,6 @@ class TokenPaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 201:
                     if ('\Paytrail\Payment\Model\TokenMITPaymentResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2662,8 +2607,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2680,8 +2623,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2698,8 +2639,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -2716,7 +2655,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
@@ -2738,7 +2676,6 @@ class TokenPaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2747,8 +2684,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2757,8 +2692,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2767,8 +2700,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -2777,7 +2708,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -2795,13 +2725,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenMitChargeAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitChargeAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
-        return $this->tokenMitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->tokenMitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2821,14 +2752,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenMitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenMitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenMitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2877,11 +2809,12 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenMitChargeRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenMitChargeRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
 
         // verify the required parameter 'token_payment_request' is set
@@ -2890,6 +2823,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenMitCharge'
             );
         }
+
 
 
 
@@ -2932,21 +2866,17 @@ class TokenPaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (isset($token_payment_request)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($token_payment_request));
             } else {
                 $httpBody = $token_payment_request;
             }
@@ -2965,9 +2895,9 @@ class TokenPaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -3007,14 +2937,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenRevert($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenRevert($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
-        list($response) = $this->tokenRevertWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        list($response) = $this->tokenRevertWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -3029,14 +2960,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenRevertWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenRevertWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
-        $request = $this->tokenRevertRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenRevertRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3074,7 +3006,6 @@ class TokenPaymentsApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\TokenMITPaymentResponse' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -3091,8 +3022,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -3109,8 +3038,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -3127,8 +3054,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -3145,7 +3070,6 @@ class TokenPaymentsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
@@ -3167,7 +3091,6 @@ class TokenPaymentsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -3176,8 +3099,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -3186,8 +3107,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -3196,8 +3115,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -3206,7 +3123,6 @@ class TokenPaymentsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -3223,13 +3139,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenRevertAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenRevertAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
-        return $this->tokenRevertAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature)
+        return $this->tokenRevertAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3248,14 +3165,15 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenRevertAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenRevertAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenRevertRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+        $request = $this->tokenRevertRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3303,12 +3221,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenRevertRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null)
+    public function tokenRevertRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
+
 
 
 
@@ -3351,16 +3271,11 @@ class TokenPaymentsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (count($formParams) > 0) {
@@ -3378,9 +3293,9 @@ class TokenPaymentsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);

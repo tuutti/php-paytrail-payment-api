@@ -69,7 +69,14 @@ class SettlementsApi
      */
     protected $hostIndex;
 
-    /**
+    /** @var string[] $contentTypes **/
+    public const contentTypes = [
+        'listSettlementIds' => [
+            'application/json',
+        ],
+    ];
+
+/**
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
@@ -130,14 +137,15 @@ class SettlementsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSettlementIds'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\SettlementIdItem[]|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function listSettlementIds($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function listSettlementIds($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['listSettlementIds'][0])
     {
-        list($response) = $this->listSettlementIdsWithHttpInfo($start_date, $end_date, $bank_reference, $limit, $submerchant, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature);
+        list($response) = $this->listSettlementIdsWithHttpInfo($start_date, $end_date, $bank_reference, $limit, $submerchant, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType);
         return $response;
     }
 
@@ -156,14 +164,15 @@ class SettlementsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSettlementIds'] to see the possible values for this operation
      *
      * @throws \Paytrail\Payment\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\SettlementIdItem[]|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listSettlementIdsWithHttpInfo($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function listSettlementIdsWithHttpInfo($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['listSettlementIds'][0])
     {
-        $request = $this->listSettlementIdsRequest($start_date, $end_date, $bank_reference, $limit, $submerchant, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature);
+        $request = $this->listSettlementIdsRequest($start_date, $end_date, $bank_reference, $limit, $submerchant, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -201,7 +210,6 @@ class SettlementsApi
             }
 
             switch($statusCode) {
-            
                 case 200:
                     if ('\Paytrail\Payment\Model\SettlementIdItem[]' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -218,8 +226,6 @@ class SettlementsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 400:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -236,8 +242,6 @@ class SettlementsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 401:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -254,8 +258,6 @@ class SettlementsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 case 404:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -272,8 +274,6 @@ class SettlementsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
-            
                 default:
                     if ('\Paytrail\Payment\Model\Error' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -290,7 +290,6 @@ class SettlementsApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-            
             }
 
             $returnType = '\Paytrail\Payment\Model\SettlementIdItem[]';
@@ -312,7 +311,6 @@ class SettlementsApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-            
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -321,8 +319,6 @@ class SettlementsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -331,8 +327,6 @@ class SettlementsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -341,8 +335,6 @@ class SettlementsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -351,8 +343,6 @@ class SettlementsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
-            
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -361,7 +351,6 @@ class SettlementsApi
                     );
                     $e->setResponseObject($data);
                     break;
-            
             }
             throw $e;
         }
@@ -382,13 +371,14 @@ class SettlementsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSettlementIds'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listSettlementIdsAsync($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function listSettlementIdsAsync($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['listSettlementIds'][0])
     {
-        return $this->listSettlementIdsAsyncWithHttpInfo($start_date, $end_date, $bank_reference, $limit, $submerchant, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature)
+        return $this->listSettlementIdsAsyncWithHttpInfo($start_date, $end_date, $bank_reference, $limit, $submerchant, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -411,14 +401,15 @@ class SettlementsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSettlementIds'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listSettlementIdsAsyncWithHttpInfo($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function listSettlementIdsAsyncWithHttpInfo($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['listSettlementIds'][0])
     {
         $returnType = '\Paytrail\Payment\Model\SettlementIdItem[]';
-        $request = $this->listSettlementIdsRequest($start_date, $end_date, $bank_reference, $limit, $submerchant, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature);
+        $request = $this->listSettlementIdsRequest($start_date, $end_date, $bank_reference, $limit, $submerchant, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -470,11 +461,12 @@ class SettlementsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSettlementIds'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listSettlementIdsRequest($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null)
+    public function listSettlementIdsRequest($start_date = null, $end_date = null, $bank_reference = null, $limit = null, $submerchant = null, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $signature = null, string $contentType = self::contentTypes['listSettlementIds'][0])
     {
 
 
@@ -482,7 +474,7 @@ class SettlementsApi
         if ($bank_reference !== null && strlen($bank_reference) > 20) {
             throw new \InvalidArgumentException('invalid length for "$bank_reference" when calling SettlementsApi.listSettlementIds, must be smaller than or equal to 20.');
         }
-
+        
 
 
 
@@ -562,16 +554,11 @@ class SettlementsApi
 
 
 
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
 
         // for model (json/xml)
         if (count($formParams) > 0) {
@@ -589,9 +576,9 @@ class SettlementsApi
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
 
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
