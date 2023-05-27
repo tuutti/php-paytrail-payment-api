@@ -109,6 +109,7 @@ Class | Method | HTTP request | Description
 - [Card](docs/Model/Card.md)
 - [Customer](docs/Model/Customer.md)
 - [Error](docs/Model/Error.md)
+- [GetTokenRequest](docs/Model/GetTokenRequest.md)
 - [GroupedPaymentProvidersResponse](docs/Model/GroupedPaymentProvidersResponse.md)
 - [Item](docs/Model/Item.md)
 - [ItemCommission](docs/Model/ItemCommission.md)

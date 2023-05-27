@@ -72,7 +72,7 @@ No authorization required
 ## `requestTokenForTokenizationId()`
 
 ```php
-requestTokenForTokenizationId($checkout_tokenization_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenizationRequestResponse
+requestTokenForTokenizationId($get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenizationRequestResponse
 ```
 
 Request a card token for given tokenization id
@@ -92,7 +92,7 @@ $apiInstance = new Paytrail\Payment\Api\TokenPaymentsApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$checkout_tokenization_id = 93ee8d18-10db-410b-92ac-7d6e49369ce3; // string | Tokenization id received from /tokenization/addcard-form
+$get_token_request = new \Paytrail\Payment\Model\GetTokenRequest(); // \Paytrail\Payment\Model\GetTokenRequest | Tokenization request payload
 $checkout_account = 375917; // int | Merchant ID
 $checkout_algorithm = sha512; // string | HMAC algorithm
 $checkout_method = POST; // string | HTTP method of the request
@@ -101,7 +101,7 @@ $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique rando
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->requestTokenForTokenizationId($checkout_tokenization_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->requestTokenForTokenizationId($get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->requestTokenForTokenizationId: ', $e->getMessage(), PHP_EOL;
@@ -112,7 +112,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **checkout_tokenization_id** | **string**| Tokenization id received from /tokenization/addcard-form | |
+| **get_token_request** | [**\Paytrail\Payment\Model\GetTokenRequest**](../Model/GetTokenRequest.md)| Tokenization request payload | |
 | **checkout_account** | **int**| Merchant ID | [optional] |
 | **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
 | **checkout_method** | **string**| HTTP method of the request | [optional] |
@@ -130,7 +130,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -276,7 +276,7 @@ No authorization required
 ## `tokenCommit()`
 
 ```php
-tokenCommit($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
+tokenCommit($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
 ```
 
 Request committing (charging) of previously created authorization hold on token
@@ -296,7 +296,6 @@ $apiInstance = new Paytrail\Payment\Api\TokenPaymentsApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$transaction_id = 93ee8d18-10db-410b-92ac-7d6e49369ce3; // string | The transaction ID
 $token_payment_request = new \Paytrail\Payment\Model\TokenPaymentRequest(); // \Paytrail\Payment\Model\TokenPaymentRequest | CIT commit payload
 $checkout_account = 375917; // int | Merchant ID
 $checkout_algorithm = sha512; // string | HMAC algorithm
@@ -306,7 +305,7 @@ $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique rando
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->tokenCommit($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->tokenCommit($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->tokenCommit: ', $e->getMessage(), PHP_EOL;
@@ -317,7 +316,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **transaction_id** | **string**| The transaction ID | |
 | **token_payment_request** | [**\Paytrail\Payment\Model\TokenPaymentRequest**](../Model/TokenPaymentRequest.md)| CIT commit payload | |
 | **checkout_account** | **int**| Merchant ID | [optional] |
 | **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
@@ -482,7 +480,7 @@ No authorization required
 ## `tokenRevert()`
 
 ```php
-tokenRevert($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
+tokenRevert($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
 ```
 
 Revert (removal) of previously created authorization hold on token
@@ -502,7 +500,6 @@ $apiInstance = new Paytrail\Payment\Api\TokenPaymentsApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$transaction_id = 93ee8d18-10db-410b-92ac-7d6e49369ce3; // string | The transaction ID
 $checkout_account = 375917; // int | Merchant ID
 $checkout_algorithm = sha512; // string | HMAC algorithm
 $checkout_method = POST; // string | HTTP method of the request
@@ -511,7 +508,7 @@ $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique rando
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->tokenRevert($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->tokenRevert($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->tokenRevert: ', $e->getMessage(), PHP_EOL;
@@ -522,7 +519,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **transaction_id** | **string**| The transaction ID | |
 | **checkout_account** | **int**| Merchant ID | [optional] |
 | **checkout_algorithm** | **string**| HMAC algorithm | [optional] |
 | **checkout_method** | **string**| HTTP method of the request | [optional] |

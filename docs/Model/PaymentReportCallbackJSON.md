@@ -31,6 +31,5 @@ Name | Type | Description | Notes
 **shop_in_shop_commission** | **float** | Payment method commission amount in Euros | [optional]
 **shop_in_shop_commission_vat_percentage** | **float** | Payment method commission VAT percentage | [optional]
 **shop_in_shop_commission_vat_amount** | **float** | Payment method commission VAT amount in Euros | [optional]
-**refunditems** | **string** | Contains a &#x60;|&#x60; (pipe) -delimited list of *stamp*:*amount* pairs. Pairs are delimited by a &#x60;:&#x60; (colon). Stamp refers to the payment item&#39;s stamp that was refunded. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

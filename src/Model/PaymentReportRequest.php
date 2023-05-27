@@ -304,7 +304,6 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
     public const REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION = 'shopInShopCommission';
     public const REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION_VAT_PERCENTAGE = 'shopInShopCommissionVatPercentage';
     public const REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION_VAT_AMOUNT = 'shopInShopCommissionVatAmount';
-    public const REPORT_FIELDS_REFUNDITEMS = 'refunditems';
 
     /**
      * Gets allowable values of the enum
@@ -369,7 +368,6 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
             self::REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION,
             self::REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION_VAT_PERCENTAGE,
             self::REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION_VAT_AMOUNT,
-            self::REPORT_FIELDS_REFUNDITEMS,
         ];
     }
 

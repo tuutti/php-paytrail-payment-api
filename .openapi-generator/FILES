@@ -15,6 +15,7 @@ docs/Model/Callbacks.md
 docs/Model/Card.md
 docs/Model/Customer.md
 docs/Model/Error.md
+docs/Model/GetTokenRequest.md
 docs/Model/GroupedPaymentProvidersResponse.md
 docs/Model/Item.md
 docs/Model/ItemCommission.md
@@ -57,6 +58,7 @@ src/Model/Callbacks.php
 src/Model/Card.php
 src/Model/Customer.php
 src/Model/Error.php
+src/Model/GetTokenRequest.php
 src/Model/GroupedPaymentProvidersResponse.php
 src/Model/Item.php
 src/Model/ItemCommission.php
