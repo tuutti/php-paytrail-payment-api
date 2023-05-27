@@ -316,8 +316,8 @@ class Address implements ModelInterface, ArrayAccess, \JsonSerializable
             $invalidProperties[] = "invalid value for 'postal_code', the character length must be smaller than or equal to 15.";
         }
 
-        if (!preg_match("/^\\d+$/", $this->container['postal_code'])) {
-            $invalidProperties[] = "invalid value for 'postal_code', must be conform to the pattern /^\\d+$/.";
+        if (!preg_match("/^[0-9A-z -]+$/", $this->container['postal_code'])) {
+            $invalidProperties[] = "invalid value for 'postal_code', must be conform to the pattern /^[0-9A-z -]+$/.";
         }
 
         if ($this->container['city'] === null) {
@@ -409,8 +409,8 @@ class Address implements ModelInterface, ArrayAccess, \JsonSerializable
         if ((mb_strlen($postal_code) > 15)) {
             throw new \InvalidArgumentException('invalid length for $postal_code when calling Address., must be smaller than or equal to 15.');
         }
-        if ((!preg_match("/^\\d+$/", $postal_code))) {
-            throw new \InvalidArgumentException("invalid value for \$postal_code when calling Address., must conform to the pattern /^\\d+$/.");
+        if ((!preg_match("/^[0-9A-z -]+$/", $postal_code))) {
+            throw new \InvalidArgumentException("invalid value for \$postal_code when calling Address., must conform to the pattern /^[0-9A-z -]+$/.");
         }
 
         $this->container['postal_code'] = $postal_code;
