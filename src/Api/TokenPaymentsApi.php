@@ -407,6 +407,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
@@ -414,9 +415,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenizationRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        list($response) = $this->requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature, $contentType);
         return $response;
     }
 
@@ -432,6 +433,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
@@ -439,9 +441,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenizationRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -613,15 +615,16 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestTokenForTokenizationIdAsync($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdAsync($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        return $this->requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -641,16 +644,17 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenizationRequestResponse';
-        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -699,13 +703,14 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
 
         // verify the required parameter 'checkout_tokenization_id' is set
@@ -721,6 +726,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $get_token_request when calling requestTokenForTokenizationId'
             );
         }
+
 
 
 
@@ -756,6 +762,10 @@ class TokenPaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($checkout_tokenization_id2 !== null) {
+            $headerParams['checkout-tokenization-id'] = ObjectSerializer::toHeaderValue($checkout_tokenization_id2);
         }
         // header params
         if ($signature !== null) {

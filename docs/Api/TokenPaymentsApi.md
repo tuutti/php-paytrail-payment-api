@@ -72,7 +72,7 @@ No authorization required
 ## `requestTokenForTokenizationId()`
 
 ```php
-requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenizationRequestResponse
+requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature): \Paytrail\Payment\Model\TokenizationRequestResponse
 ```
 
 Request a card token for given tokenization id
@@ -99,10 +99,11 @@ $checkout_algorithm = sha512; // string | HMAC algorithm
 $checkout_method = POST; // string | HTTP method of the request
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$checkout_tokenization_id2 = 93ee8d18-10db-410b-92ac-7d6e49369ce3; // string | Tokenization id received from /tokenization/addcard-form
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->requestTokenForTokenizationId: ', $e->getMessage(), PHP_EOL;
@@ -120,6 +121,7 @@ try {
 | **checkout_method** | **string**| HTTP method of the request | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **checkout_tokenization_id2** | **string**| Tokenization id received from /tokenization/addcard-form | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
