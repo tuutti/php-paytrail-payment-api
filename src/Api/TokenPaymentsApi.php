@@ -400,6 +400,7 @@ class TokenPaymentsApi
      *
      * Request a card token for given tokenization id
      *
+     * @param  string $checkout_tokenization_id Tokenization id received from /tokenization/addcard-form (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -412,9 +413,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenizationRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function requestTokenForTokenizationId($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationId($checkout_tokenization_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        list($response) = $this->requestTokenForTokenizationIdWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -423,6 +424,7 @@ class TokenPaymentsApi
      *
      * Request a card token for given tokenization id
      *
+     * @param  string $checkout_tokenization_id Tokenization id received from /tokenization/addcard-form (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -435,9 +437,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenizationRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function requestTokenForTokenizationIdWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        $request = $this->requestTokenForTokenizationIdRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -602,6 +604,7 @@ class TokenPaymentsApi
      *
      * Request a card token for given tokenization id
      *
+     * @param  string $checkout_tokenization_id Tokenization id received from /tokenization/addcard-form (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -613,9 +616,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestTokenForTokenizationIdAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdAsync($checkout_tokenization_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        return $this->requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -628,6 +631,7 @@ class TokenPaymentsApi
      *
      * Request a card token for given tokenization id
      *
+     * @param  string $checkout_tokenization_id Tokenization id received from /tokenization/addcard-form (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -639,10 +643,10 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenizationRequestResponse';
-        $request = $this->requestTokenForTokenizationIdRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -684,6 +688,7 @@ class TokenPaymentsApi
     /**
      * Create request for operation 'requestTokenForTokenizationId'
      *
+     * @param  string $checkout_tokenization_id Tokenization id received from /tokenization/addcard-form (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -695,8 +700,15 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function requestTokenForTokenizationIdRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdRequest($checkout_tokenization_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
+
+        // verify the required parameter 'checkout_tokenization_id' is set
+        if ($checkout_tokenization_id === null || (is_array($checkout_tokenization_id) && count($checkout_tokenization_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $checkout_tokenization_id when calling requestTokenForTokenizationId'
+            );
+        }
 
 
 
@@ -738,6 +750,14 @@ class TokenPaymentsApi
             $headerParams['signature'] = ObjectSerializer::toHeaderValue($signature);
         }
 
+        // path params
+        if ($checkout_tokenization_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'checkout-tokenization-id' . '}',
+                ObjectSerializer::toPathValue($checkout_tokenization_id),
+                $resourcePath
+            );
+        }
 
 
         $headers = $this->headerSelector->selectHeaders(
@@ -1680,6 +1700,7 @@ class TokenPaymentsApi
      *
      * Request committing (charging) of previously created authorization hold on token
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  \Paytrail\Payment\Model\TokenPaymentRequest $token_payment_request CIT commit payload (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
@@ -1693,9 +1714,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenCommit($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommit($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
-        list($response) = $this->tokenCommitWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->tokenCommitWithHttpInfo($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -1704,6 +1725,7 @@ class TokenPaymentsApi
      *
      * Request committing (charging) of previously created authorization hold on token
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  \Paytrail\Payment\Model\TokenPaymentRequest $token_payment_request CIT commit payload (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
@@ -1717,9 +1739,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenCommitWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommitWithHttpInfo($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
-        $request = $this->tokenCommitRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenCommitRequest($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1884,6 +1906,7 @@ class TokenPaymentsApi
      *
      * Request committing (charging) of previously created authorization hold on token
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  \Paytrail\Payment\Model\TokenPaymentRequest $token_payment_request CIT commit payload (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
@@ -1896,9 +1919,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCommitAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommitAsync($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
-        return $this->tokenCommitAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->tokenCommitAsyncWithHttpInfo($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1911,6 +1934,7 @@ class TokenPaymentsApi
      *
      * Request committing (charging) of previously created authorization hold on token
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  \Paytrail\Payment\Model\TokenPaymentRequest $token_payment_request CIT commit payload (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
@@ -1923,10 +1947,10 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCommitAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommitAsyncWithHttpInfo($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenCommitRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenCommitRequest($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1968,6 +1992,7 @@ class TokenPaymentsApi
     /**
      * Create request for operation 'tokenCommit'
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  \Paytrail\Payment\Model\TokenPaymentRequest $token_payment_request CIT commit payload (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
@@ -1980,8 +2005,15 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenCommitRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommitRequest($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
+
+        // verify the required parameter 'transaction_id' is set
+        if ($transaction_id === null || (is_array($transaction_id) && count($transaction_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $transaction_id when calling tokenCommit'
+            );
+        }
 
         // verify the required parameter 'token_payment_request' is set
         if ($token_payment_request === null || (is_array($token_payment_request) && count($token_payment_request) === 0)) {
@@ -2030,6 +2062,14 @@ class TokenPaymentsApi
             $headerParams['signature'] = ObjectSerializer::toHeaderValue($signature);
         }
 
+        // path params
+        if ($transaction_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'transactionId' . '}',
+                ObjectSerializer::toPathValue($transaction_id),
+                $resourcePath
+            );
+        }
 
 
         $headers = $this->headerSelector->selectHeaders(
@@ -2931,6 +2971,7 @@ class TokenPaymentsApi
      *
      * Revert (removal) of previously created authorization hold on token
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -2943,9 +2984,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenRevert($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevert($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
-        list($response) = $this->tokenRevertWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->tokenRevertWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
         return $response;
     }
 
@@ -2954,6 +2995,7 @@ class TokenPaymentsApi
      *
      * Revert (removal) of previously created authorization hold on token
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -2966,9 +3008,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenRevertWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevertWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
-        $request = $this->tokenRevertRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenRevertRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3133,6 +3175,7 @@ class TokenPaymentsApi
      *
      * Revert (removal) of previously created authorization hold on token
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -3144,9 +3187,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenRevertAsync($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevertAsync($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
-        return $this->tokenRevertAsyncWithHttpInfo($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->tokenRevertAsyncWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3159,6 +3202,7 @@ class TokenPaymentsApi
      *
      * Revert (removal) of previously created authorization hold on token
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -3170,10 +3214,10 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenRevertAsyncWithHttpInfo($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevertAsyncWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenRevertRequest($checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenRevertRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3215,6 +3259,7 @@ class TokenPaymentsApi
     /**
      * Create request for operation 'tokenRevert'
      *
+     * @param  string $transaction_id The transaction ID (required)
      * @param  int $checkout_account Merchant ID (optional)
      * @param  string $checkout_algorithm HMAC algorithm (optional)
      * @param  string $checkout_method HTTP method of the request (optional)
@@ -3226,8 +3271,15 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenRevertRequest($checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevertRequest($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
+
+        // verify the required parameter 'transaction_id' is set
+        if ($transaction_id === null || (is_array($transaction_id) && count($transaction_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $transaction_id when calling tokenRevert'
+            );
+        }
 
 
 
@@ -3269,6 +3321,14 @@ class TokenPaymentsApi
             $headerParams['signature'] = ObjectSerializer::toHeaderValue($signature);
         }
 
+        // path params
+        if ($transaction_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'transactionId' . '}',
+                ObjectSerializer::toPathValue($transaction_id),
+                $resourcePath
+            );
+        }
 
 
         $headers = $this->headerSelector->selectHeaders(
