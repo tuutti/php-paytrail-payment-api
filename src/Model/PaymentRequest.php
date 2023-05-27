@@ -72,7 +72,8 @@ class PaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirect_urls' => '\Paytrail\Payment\Model\Callbacks',
         'callback_urls' => '\Paytrail\Payment\Model\Callbacks',
         'callback_delay' => 'int',
-        'groups' => 'string[]'
+        'groups' => 'string[]',
+        'use_prices_without_vat' => 'bool'
     ];
 
     /**
@@ -97,7 +98,8 @@ class PaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirect_urls' => null,
         'callback_urls' => null,
         'callback_delay' => null,
-        'groups' => null
+        'groups' => null,
+        'use_prices_without_vat' => null
     ];
 
     /**
@@ -120,7 +122,8 @@ class PaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 		'redirect_urls' => false,
 		'callback_urls' => false,
 		'callback_delay' => false,
-		'groups' => false
+		'groups' => false,
+		'use_prices_without_vat' => false
     ];
 
     /**
@@ -223,7 +226,8 @@ class PaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirect_urls' => 'redirectUrls',
         'callback_urls' => 'callbackUrls',
         'callback_delay' => 'callbackDelay',
-        'groups' => 'groups'
+        'groups' => 'groups',
+        'use_prices_without_vat' => 'usePricesWithoutVat'
     ];
 
     /**
@@ -246,7 +250,8 @@ class PaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirect_urls' => 'setRedirectUrls',
         'callback_urls' => 'setCallbackUrls',
         'callback_delay' => 'setCallbackDelay',
-        'groups' => 'setGroups'
+        'groups' => 'setGroups',
+        'use_prices_without_vat' => 'setUsePricesWithoutVat'
     ];
 
     /**
@@ -269,7 +274,8 @@ class PaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirect_urls' => 'getRedirectUrls',
         'callback_urls' => 'getCallbackUrls',
         'callback_delay' => 'getCallbackDelay',
-        'groups' => 'getGroups'
+        'groups' => 'getGroups',
+        'use_prices_without_vat' => 'getUsePricesWithoutVat'
     ];
 
     /**
@@ -395,6 +401,7 @@ class PaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('callback_urls', $data ?? [], null);
         $this->setIfExists('callback_delay', $data ?? [], null);
         $this->setIfExists('groups', $data ?? [], null);
+        $this->setIfExists('use_prices_without_vat', $data ?? [], null);
     }
 
     /**
@@ -584,7 +591,7 @@ class PaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets amount
      *
-     * @param int $amount Total amount of the payment (sum of items), VAT included
+     * @param int $amount Total amount of the payment (sum of items), VAT should be included in amount unless `usePricesWithoutVat` is set to true
      *
      * @return self
      */
@@ -967,6 +974,33 @@ class PaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             );
         }
         $this->container['groups'] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Gets use_prices_without_vat
+     *
+     * @return bool|null
+     */
+    public function getUsePricesWithoutVat()
+    {
+        return $this->container['use_prices_without_vat'];
+    }
+
+    /**
+     * Sets use_prices_without_vat
+     *
+     * @param bool|null $use_prices_without_vat If true, `amount` and `items.unitPrice` should be sent to API without VAT, and final VAT-included prices are calculated by Paytrail's system (with prices rounded to closest cent). Also, when true, items must be included.
+     *
+     * @return self
+     */
+    public function setUsePricesWithoutVat($use_prices_without_vat)
+    {
+        if (is_null($use_prices_without_vat)) {
+            throw new \InvalidArgumentException('non-nullable use_prices_without_vat cannot be null');
+        }
+        $this->container['use_prices_without_vat'] = $use_prices_without_vat;
 
         return $this;
     }

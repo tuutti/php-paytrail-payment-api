@@ -84,7 +84,8 @@ class PaymentReportCallbackJSON implements ModelInterface, ArrayAccess, \JsonSer
         'payment_method_commission' => 'float',
         'shop_in_shop_commission' => 'float',
         'shop_in_shop_commission_vat_percentage' => 'float',
-        'shop_in_shop_commission_vat_amount' => 'float'
+        'shop_in_shop_commission_vat_amount' => 'float',
+        'refunditems' => 'string'
     ];
 
     /**
@@ -121,7 +122,8 @@ class PaymentReportCallbackJSON implements ModelInterface, ArrayAccess, \JsonSer
         'payment_method_commission' => 'float',
         'shop_in_shop_commission' => 'float',
         'shop_in_shop_commission_vat_percentage' => 'float',
-        'shop_in_shop_commission_vat_amount' => 'float'
+        'shop_in_shop_commission_vat_amount' => 'float',
+        'refunditems' => null
     ];
 
     /**
@@ -156,7 +158,8 @@ class PaymentReportCallbackJSON implements ModelInterface, ArrayAccess, \JsonSer
 		'payment_method_commission' => false,
 		'shop_in_shop_commission' => false,
 		'shop_in_shop_commission_vat_percentage' => false,
-		'shop_in_shop_commission_vat_amount' => false
+		'shop_in_shop_commission_vat_amount' => false,
+		'refunditems' => false
     ];
 
     /**
@@ -271,7 +274,8 @@ class PaymentReportCallbackJSON implements ModelInterface, ArrayAccess, \JsonSer
         'payment_method_commission' => 'paymentMethodCommission',
         'shop_in_shop_commission' => 'shopInShopCommission',
         'shop_in_shop_commission_vat_percentage' => 'shopInShopCommissionVatPercentage',
-        'shop_in_shop_commission_vat_amount' => 'shopInShopCommissionVatAmount'
+        'shop_in_shop_commission_vat_amount' => 'shopInShopCommissionVatAmount',
+        'refunditems' => 'refunditems'
     ];
 
     /**
@@ -306,7 +310,8 @@ class PaymentReportCallbackJSON implements ModelInterface, ArrayAccess, \JsonSer
         'payment_method_commission' => 'setPaymentMethodCommission',
         'shop_in_shop_commission' => 'setShopInShopCommission',
         'shop_in_shop_commission_vat_percentage' => 'setShopInShopCommissionVatPercentage',
-        'shop_in_shop_commission_vat_amount' => 'setShopInShopCommissionVatAmount'
+        'shop_in_shop_commission_vat_amount' => 'setShopInShopCommissionVatAmount',
+        'refunditems' => 'setRefunditems'
     ];
 
     /**
@@ -341,7 +346,8 @@ class PaymentReportCallbackJSON implements ModelInterface, ArrayAccess, \JsonSer
         'payment_method_commission' => 'getPaymentMethodCommission',
         'shop_in_shop_commission' => 'getShopInShopCommission',
         'shop_in_shop_commission_vat_percentage' => 'getShopInShopCommissionVatPercentage',
-        'shop_in_shop_commission_vat_amount' => 'getShopInShopCommissionVatAmount'
+        'shop_in_shop_commission_vat_amount' => 'getShopInShopCommissionVatAmount',
+        'refunditems' => 'getRefunditems'
     ];
 
     /**
@@ -455,6 +461,7 @@ class PaymentReportCallbackJSON implements ModelInterface, ArrayAccess, \JsonSer
         $this->setIfExists('shop_in_shop_commission', $data ?? [], null);
         $this->setIfExists('shop_in_shop_commission_vat_percentage', $data ?? [], null);
         $this->setIfExists('shop_in_shop_commission_vat_amount', $data ?? [], null);
+        $this->setIfExists('refunditems', $data ?? [], null);
     }
 
     /**
@@ -1243,6 +1250,33 @@ class PaymentReportCallbackJSON implements ModelInterface, ArrayAccess, \JsonSer
             throw new \InvalidArgumentException('non-nullable shop_in_shop_commission_vat_amount cannot be null');
         }
         $this->container['shop_in_shop_commission_vat_amount'] = $shop_in_shop_commission_vat_amount;
+
+        return $this;
+    }
+
+    /**
+     * Gets refunditems
+     *
+     * @return string|null
+     */
+    public function getRefunditems()
+    {
+        return $this->container['refunditems'];
+    }
+
+    /**
+     * Sets refunditems
+     *
+     * @param string|null $refunditems Contains a `|` (pipe) -delimited list of *stamp*:*amount* pairs. Pairs are delimited by a `:` (colon). Stamp refers to the payment item's stamp that was refunded.
+     *
+     * @return self
+     */
+    public function setRefunditems($refunditems)
+    {
+        if (is_null($refunditems)) {
+            throw new \InvalidArgumentException('non-nullable refunditems cannot be null');
+        }
+        $this->container['refunditems'] = $refunditems;
 
         return $this;
     }
