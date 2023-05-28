@@ -293,6 +293,7 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
     public const STATUS_FAIL = 'fail';
     public const STATUS_PENDING = 'pending';
     public const STATUS_DELAYED = 'delayed';
+    public const STATUS_AUTHORIZATION_HOLD = 'authorization-hold';
     public const CURRENCY_EUR = 'EUR';
 
     /**
@@ -308,6 +309,7 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
             self::STATUS_FAIL,
             self::STATUS_PENDING,
             self::STATUS_DELAYED,
+            self::STATUS_AUTHORIZATION_HOLD,
         ];
     }
 
