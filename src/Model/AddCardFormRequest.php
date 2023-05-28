@@ -60,6 +60,9 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $openAPITypes = [
         'checkout_account' => 'int',
         'checkout_algorithm' => 'string',
+        'checkout_method' => 'string',
+        'checkout_nonce' => 'string',
+        'checkout_timestamp' => '\DateTime',
         'checkout_redirect_success_url' => 'string',
         'checkout_redirect_cancel_url' => 'string',
         'checkout_callback_success_url' => 'string',
@@ -78,6 +81,9 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $openAPIFormats = [
         'checkout_account' => null,
         'checkout_algorithm' => null,
+        'checkout_method' => null,
+        'checkout_nonce' => null,
+        'checkout_timestamp' => 'date-time',
         'checkout_redirect_success_url' => 'url',
         'checkout_redirect_cancel_url' => 'url',
         'checkout_callback_success_url' => 'url',
@@ -94,6 +100,9 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static array $openAPINullables = [
         'checkout_account' => false,
 		'checkout_algorithm' => false,
+		'checkout_method' => false,
+		'checkout_nonce' => false,
+		'checkout_timestamp' => false,
 		'checkout_redirect_success_url' => false,
 		'checkout_redirect_cancel_url' => false,
 		'checkout_callback_success_url' => false,
@@ -190,6 +199,9 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $attributeMap = [
         'checkout_account' => 'checkout-account',
         'checkout_algorithm' => 'checkout-algorithm',
+        'checkout_method' => 'checkout-method',
+        'checkout_nonce' => 'checkout-nonce',
+        'checkout_timestamp' => 'checkout-timestamp',
         'checkout_redirect_success_url' => 'checkout-redirect-success-url',
         'checkout_redirect_cancel_url' => 'checkout-redirect-cancel-url',
         'checkout_callback_success_url' => 'checkout-callback-success-url',
@@ -206,6 +218,9 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $setters = [
         'checkout_account' => 'setCheckoutAccount',
         'checkout_algorithm' => 'setCheckoutAlgorithm',
+        'checkout_method' => 'setCheckoutMethod',
+        'checkout_nonce' => 'setCheckoutNonce',
+        'checkout_timestamp' => 'setCheckoutTimestamp',
         'checkout_redirect_success_url' => 'setCheckoutRedirectSuccessUrl',
         'checkout_redirect_cancel_url' => 'setCheckoutRedirectCancelUrl',
         'checkout_callback_success_url' => 'setCheckoutCallbackSuccessUrl',
@@ -222,6 +237,9 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $getters = [
         'checkout_account' => 'getCheckoutAccount',
         'checkout_algorithm' => 'getCheckoutAlgorithm',
+        'checkout_method' => 'getCheckoutMethod',
+        'checkout_nonce' => 'getCheckoutNonce',
+        'checkout_timestamp' => 'getCheckoutTimestamp',
         'checkout_redirect_success_url' => 'getCheckoutRedirectSuccessUrl',
         'checkout_redirect_cancel_url' => 'getCheckoutRedirectCancelUrl',
         'checkout_callback_success_url' => 'getCheckoutCallbackSuccessUrl',
@@ -273,6 +291,8 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
 
     public const CHECKOUT_ALGORITHM_SHA256 = 'sha256';
     public const CHECKOUT_ALGORITHM_SHA512 = 'sha512';
+    public const CHECKOUT_METHOD_GET = 'GET';
+    public const CHECKOUT_METHOD_POST = 'POST';
     public const LANGUAGE_FI = 'FI';
     public const LANGUAGE_SV = 'SV';
     public const LANGUAGE_EN = 'EN';
@@ -287,6 +307,19 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         return [
             self::CHECKOUT_ALGORITHM_SHA256,
             self::CHECKOUT_ALGORITHM_SHA512,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getCheckoutMethodAllowableValues()
+    {
+        return [
+            self::CHECKOUT_METHOD_GET,
+            self::CHECKOUT_METHOD_POST,
         ];
     }
 
@@ -321,6 +354,9 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     {
         $this->setIfExists('checkout_account', $data ?? [], null);
         $this->setIfExists('checkout_algorithm', $data ?? [], null);
+        $this->setIfExists('checkout_method', $data ?? [], null);
+        $this->setIfExists('checkout_nonce', $data ?? [], null);
+        $this->setIfExists('checkout_timestamp', $data ?? [], null);
         $this->setIfExists('checkout_redirect_success_url', $data ?? [], null);
         $this->setIfExists('checkout_redirect_cancel_url', $data ?? [], null);
         $this->setIfExists('checkout_callback_success_url', $data ?? [], null);
@@ -367,6 +403,15 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
             $invalidProperties[] = sprintf(
                 "invalid value '%s' for 'checkout_algorithm', must be one of '%s'",
                 $this->container['checkout_algorithm'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getCheckoutMethodAllowableValues();
+        if (!is_null($this->container['checkout_method']) && !in_array($this->container['checkout_method'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'checkout_method', must be one of '%s'",
+                $this->container['checkout_method'],
                 implode("', '", $allowedValues)
             );
         }
@@ -461,6 +506,97 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
             );
         }
         $this->container['checkout_algorithm'] = $checkout_algorithm;
+
+        return $this;
+    }
+
+    /**
+     * Gets checkout_method
+     *
+     * @return string|null
+     */
+    public function getCheckoutMethod()
+    {
+        return $this->container['checkout_method'];
+    }
+
+    /**
+     * Sets checkout_method
+     *
+     * @param string|null $checkout_method HTTP method of the request
+     *
+     * @return self
+     */
+    public function setCheckoutMethod($checkout_method)
+    {
+        if (is_null($checkout_method)) {
+            throw new \InvalidArgumentException('non-nullable checkout_method cannot be null');
+        }
+        $allowedValues = $this->getCheckoutMethodAllowableValues();
+        if (!in_array($checkout_method, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'checkout_method', must be one of '%s'",
+                    $checkout_method,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['checkout_method'] = $checkout_method;
+
+        return $this;
+    }
+
+    /**
+     * Gets checkout_nonce
+     *
+     * @return string|null
+     */
+    public function getCheckoutNonce()
+    {
+        return $this->container['checkout_nonce'];
+    }
+
+    /**
+     * Sets checkout_nonce
+     *
+     * @param string|null $checkout_nonce Unique random identifier
+     *
+     * @return self
+     */
+    public function setCheckoutNonce($checkout_nonce)
+    {
+        if (is_null($checkout_nonce)) {
+            throw new \InvalidArgumentException('non-nullable checkout_nonce cannot be null');
+        }
+        $this->container['checkout_nonce'] = $checkout_nonce;
+
+        return $this;
+    }
+
+    /**
+     * Gets checkout_timestamp
+     *
+     * @return \DateTime|null
+     */
+    public function getCheckoutTimestamp()
+    {
+        return $this->container['checkout_timestamp'];
+    }
+
+    /**
+     * Sets checkout_timestamp
+     *
+     * @param \DateTime|null $checkout_timestamp Current timestamp in ISO 8601 format
+     *
+     * @return self
+     */
+    public function setCheckoutTimestamp($checkout_timestamp)
+    {
+        if (is_null($checkout_timestamp)) {
+            throw new \InvalidArgumentException('non-nullable checkout_timestamp cannot be null');
+        }
+        $this->container['checkout_timestamp'] = $checkout_timestamp;
 
         return $this;
     }
