@@ -64,7 +64,8 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'checkout_redirect_cancel_url' => 'string',
         'checkout_callback_success_url' => 'string',
         'checkout_callback_cancel_url' => 'string',
-        'language' => 'string'
+        'language' => 'string',
+        'signature' => 'string'
     ];
 
     /**
@@ -81,7 +82,8 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'checkout_redirect_cancel_url' => 'url',
         'checkout_callback_success_url' => 'url',
         'checkout_callback_cancel_url' => 'url',
-        'language' => null
+        'language' => null,
+        'signature' => null
     ];
 
     /**
@@ -96,7 +98,8 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
 		'checkout_redirect_cancel_url' => false,
 		'checkout_callback_success_url' => false,
 		'checkout_callback_cancel_url' => false,
-		'language' => false
+		'language' => false,
+		'signature' => false
     ];
 
     /**
@@ -191,7 +194,8 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'checkout_redirect_cancel_url' => 'checkout-redirect-cancel-url',
         'checkout_callback_success_url' => 'checkout-callback-success-url',
         'checkout_callback_cancel_url' => 'checkout-callback-cancel-url',
-        'language' => 'language'
+        'language' => 'language',
+        'signature' => 'signature'
     ];
 
     /**
@@ -206,7 +210,8 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'checkout_redirect_cancel_url' => 'setCheckoutRedirectCancelUrl',
         'checkout_callback_success_url' => 'setCheckoutCallbackSuccessUrl',
         'checkout_callback_cancel_url' => 'setCheckoutCallbackCancelUrl',
-        'language' => 'setLanguage'
+        'language' => 'setLanguage',
+        'signature' => 'setSignature'
     ];
 
     /**
@@ -221,7 +226,8 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'checkout_redirect_cancel_url' => 'getCheckoutRedirectCancelUrl',
         'checkout_callback_success_url' => 'getCheckoutCallbackSuccessUrl',
         'checkout_callback_cancel_url' => 'getCheckoutCallbackCancelUrl',
-        'language' => 'getLanguage'
+        'language' => 'getLanguage',
+        'signature' => 'getSignature'
     ];
 
     /**
@@ -320,6 +326,7 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         $this->setIfExists('checkout_callback_success_url', $data ?? [], null);
         $this->setIfExists('checkout_callback_cancel_url', $data ?? [], null);
         $this->setIfExists('language', $data ?? [], null);
+        $this->setIfExists('signature', $data ?? [], null);
     }
 
     /**
@@ -599,6 +606,33 @@ class AddCardFormRequest implements ModelInterface, ArrayAccess, \JsonSerializab
             );
         }
         $this->container['language'] = $language;
+
+        return $this;
+    }
+
+    /**
+     * Gets signature
+     *
+     * @return string|null
+     */
+    public function getSignature()
+    {
+        return $this->container['signature'];
+    }
+
+    /**
+     * Sets signature
+     *
+     * @param string|null $signature HMAC signature calculated over the request headers and payload
+     *
+     * @return self
+     */
+    public function setSignature($signature)
+    {
+        if (is_null($signature)) {
+            throw new \InvalidArgumentException('non-nullable signature cannot be null');
+        }
+        $this->container['signature'] = $signature;
 
         return $this;
     }

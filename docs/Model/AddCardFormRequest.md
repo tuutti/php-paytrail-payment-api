@@ -11,5 +11,6 @@ Name | Type | Description | Notes
 **checkout_callback_success_url** | **string** | Merchant&#39;s url called on successful card addition | [optional]
 **checkout_callback_cancel_url** | **string** | Merchant&#39;s url called on failed card addition | [optional]
 **language** | **string** | Alpha-2 language code for the card addition form | [optional]
+**signature** | **string** | HMAC signature calculated over the request headers and payload | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
