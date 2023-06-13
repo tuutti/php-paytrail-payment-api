@@ -72,7 +72,7 @@ No authorization required
 ## `requestTokenForTokenizationId()`
 
 ```php
-requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature): \Paytrail\Payment\Model\TokenizationRequestResponse
+requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $platform_name, $signature): \Paytrail\Payment\Model\TokenizationRequestResponse
 ```
 
 Request a card token for given tokenization id
@@ -100,10 +100,11 @@ $checkout_method = POST; // string | HTTP method of the request
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
 $checkout_tokenization_id2 = 93ee8d18-10db-410b-92ac-7d6e49369ce3; // string | Tokenization id received from /tokenization/addcard-form
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature);
+    $result = $apiInstance->requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->requestTokenForTokenizationId: ', $e->getMessage(), PHP_EOL;
@@ -122,6 +123,7 @@ try {
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
 | **checkout_tokenization_id2** | **string**| Tokenization id received from /tokenization/addcard-form | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
@@ -144,7 +146,7 @@ No authorization required
 ## `tokenCitAuthorizationHold()`
 
 ```php
-tokenCitAuthorizationHold($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
+tokenCitAuthorizationHold($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
 ```
 
 Request customer initiated transaction authorization hold on token
@@ -170,10 +172,11 @@ $checkout_algorithm = sha512; // string | HMAC algorithm
 $checkout_method = POST; // string | HTTP method of the request
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->tokenCitAuthorizationHold($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->tokenCitAuthorizationHold($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->tokenCitAuthorizationHold: ', $e->getMessage(), PHP_EOL;
@@ -190,6 +193,7 @@ try {
 | **checkout_method** | **string**| HTTP method of the request | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
@@ -212,7 +216,7 @@ No authorization required
 ## `tokenCitCharge()`
 
 ```php
-tokenCitCharge($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
+tokenCitCharge($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
 ```
 
 Request customer initiated transaction charge on token
@@ -238,10 +242,11 @@ $checkout_algorithm = sha512; // string | HMAC algorithm
 $checkout_method = POST; // string | HTTP method of the request
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->tokenCitCharge($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->tokenCitCharge($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->tokenCitCharge: ', $e->getMessage(), PHP_EOL;
@@ -258,6 +263,7 @@ try {
 | **checkout_method** | **string**| HTTP method of the request | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
@@ -280,7 +286,7 @@ No authorization required
 ## `tokenCommit()`
 
 ```php
-tokenCommit($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
+tokenCommit($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
 ```
 
 Request committing (charging) of previously created authorization hold on token
@@ -308,10 +314,11 @@ $checkout_method = POST; // string | HTTP method of the request
 $checkout_transaction_id = 93ee8d18-10db-410b-92ac-7d6e49369ce3; // string | The same transaction ID as in route
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->tokenCommit($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->tokenCommit($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->tokenCommit: ', $e->getMessage(), PHP_EOL;
@@ -330,6 +337,7 @@ try {
 | **checkout_transaction_id** | **string**| The same transaction ID as in route | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
@@ -352,7 +360,7 @@ No authorization required
 ## `tokenMitAuthorizationHold()`
 
 ```php
-tokenMitAuthorizationHold($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
+tokenMitAuthorizationHold($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
 ```
 
 Request merchant initiated transaction authorization hold on token
@@ -378,10 +386,11 @@ $checkout_algorithm = sha512; // string | HMAC algorithm
 $checkout_method = POST; // string | HTTP method of the request
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->tokenMitAuthorizationHold($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->tokenMitAuthorizationHold($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->tokenMitAuthorizationHold: ', $e->getMessage(), PHP_EOL;
@@ -398,6 +407,7 @@ try {
 | **checkout_method** | **string**| HTTP method of the request | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
@@ -420,7 +430,7 @@ No authorization required
 ## `tokenMitCharge()`
 
 ```php
-tokenMitCharge($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
+tokenMitCharge($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
 ```
 
 Request merchant initiated transaction charge on token
@@ -446,10 +456,11 @@ $checkout_algorithm = sha512; // string | HMAC algorithm
 $checkout_method = POST; // string | HTTP method of the request
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->tokenMitCharge($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->tokenMitCharge($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->tokenMitCharge: ', $e->getMessage(), PHP_EOL;
@@ -466,6 +477,7 @@ try {
 | **checkout_method** | **string**| HTTP method of the request | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
@@ -488,7 +500,7 @@ No authorization required
 ## `tokenRevert()`
 
 ```php
-tokenRevert($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
+tokenRevert($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature): \Paytrail\Payment\Model\TokenMITPaymentResponse
 ```
 
 Revert (removal) of previously created authorization hold on token
@@ -515,10 +527,11 @@ $checkout_method = POST; // string | HTTP method of the request
 $checkout_transaction_id = 93ee8d18-10db-410b-92ac-7d6e49369ce3; // string | The same transaction ID as in route
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->tokenRevert($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->tokenRevert($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TokenPaymentsApi->tokenRevert: ', $e->getMessage(), PHP_EOL;
@@ -536,6 +549,7 @@ try {
 | **checkout_transaction_id** | **string**| The same transaction ID as in route | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type

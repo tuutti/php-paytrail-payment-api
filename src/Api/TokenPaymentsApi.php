@@ -408,6 +408,7 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
@@ -415,9 +416,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenizationRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationId($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        list($response) = $this->requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature, $contentType);
+        list($response) = $this->requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -434,6 +435,7 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
@@ -441,9 +443,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenizationRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature, $contentType);
+        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -616,15 +618,16 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestTokenForTokenizationIdAsync($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdAsync($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
-        return $this->requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature, $contentType)
+        return $this->requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -645,16 +648,17 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdAsyncWithHttpInfo($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenizationRequestResponse';
-        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $signature, $contentType);
+        $request = $this->requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $checkout_tokenization_id2, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -704,13 +708,14 @@ class TokenPaymentsApi
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
      * @param  string $checkout_tokenization_id2 Tokenization id received from /tokenization/addcard-form (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestTokenForTokenizationId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
+    public function requestTokenForTokenizationIdRequest($checkout_tokenization_id, $get_token_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $checkout_tokenization_id2 = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['requestTokenForTokenizationId'][0])
     {
 
         // verify the required parameter 'checkout_tokenization_id' is set
@@ -726,6 +731,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $get_token_request when calling requestTokenForTokenizationId'
             );
         }
+
 
 
 
@@ -766,6 +772,10 @@ class TokenPaymentsApi
         // header params
         if ($checkout_tokenization_id2 !== null) {
             $headerParams['checkout-tokenization-id'] = ObjectSerializer::toHeaderValue($checkout_tokenization_id2);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {
@@ -853,6 +863,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
@@ -860,9 +871,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\TokenCITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenCitAuthorizationHold($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
+    public function tokenCitAuthorizationHold($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
-        list($response) = $this->tokenCitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->tokenCitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -877,6 +888,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
@@ -884,9 +896,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\TokenCITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenCitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
+    public function tokenCitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
-        $request = $this->tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1081,15 +1093,16 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCitAuthorizationHoldAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
+    public function tokenCitAuthorizationHoldAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
-        return $this->tokenCitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->tokenCitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1108,16 +1121,17 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
+    public function tokenCitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1165,13 +1179,14 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
+    public function tokenCitAuthorizationHoldRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitAuthorizationHold'][0])
     {
 
         // verify the required parameter 'token_payment_request' is set
@@ -1180,6 +1195,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenCitAuthorizationHold'
             );
         }
+
 
 
 
@@ -1215,6 +1231,10 @@ class TokenPaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {
@@ -1294,6 +1314,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
@@ -1301,9 +1322,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\TokenCITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenCitCharge($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
+    public function tokenCitCharge($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
-        list($response) = $this->tokenCitChargeWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->tokenCitChargeWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -1318,6 +1339,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
@@ -1325,9 +1347,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\TokenCITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenCitChargeWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
+    public function tokenCitChargeWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
-        $request = $this->tokenCitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenCitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1522,15 +1544,16 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCitChargeAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
+    public function tokenCitChargeAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
-        return $this->tokenCitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->tokenCitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1549,16 +1572,17 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
+    public function tokenCitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenCitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenCitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1606,13 +1630,14 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenCitChargeRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
+    public function tokenCitChargeRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCitCharge'][0])
     {
 
         // verify the required parameter 'token_payment_request' is set
@@ -1621,6 +1646,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenCitCharge'
             );
         }
+
 
 
 
@@ -1656,6 +1682,10 @@ class TokenPaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {
@@ -1737,6 +1767,7 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
@@ -1744,9 +1775,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenCommit($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommit($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
-        list($response) = $this->tokenCommitWithHttpInfo($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->tokenCommitWithHttpInfo($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -1763,6 +1794,7 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
@@ -1770,9 +1802,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenCommitWithHttpInfo($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommitWithHttpInfo($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
-        $request = $this->tokenCommitRequest($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenCommitRequest($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1945,15 +1977,16 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCommitAsync($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommitAsync($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
-        return $this->tokenCommitAsyncWithHttpInfo($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->tokenCommitAsyncWithHttpInfo($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1974,16 +2007,17 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenCommitAsyncWithHttpInfo($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommitAsyncWithHttpInfo($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenCommitRequest($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenCommitRequest($transaction_id, $token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2033,13 +2067,14 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenCommit'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenCommitRequest($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
+    public function tokenCommitRequest($transaction_id, $token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenCommit'][0])
     {
 
         // verify the required parameter 'transaction_id' is set
@@ -2055,6 +2090,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenCommit'
             );
         }
+
 
 
 
@@ -2095,6 +2131,10 @@ class TokenPaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {
@@ -2182,6 +2222,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
@@ -2189,9 +2230,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenMitAuthorizationHold($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
+    public function tokenMitAuthorizationHold($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
-        list($response) = $this->tokenMitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->tokenMitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -2206,6 +2247,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
@@ -2213,9 +2255,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenMitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
+    public function tokenMitAuthorizationHoldWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
-        $request = $this->tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2386,15 +2428,16 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenMitAuthorizationHoldAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
+    public function tokenMitAuthorizationHoldAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
-        return $this->tokenMitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->tokenMitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2413,16 +2456,17 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenMitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
+    public function tokenMitAuthorizationHoldAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2470,13 +2514,14 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitAuthorizationHold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
+    public function tokenMitAuthorizationHoldRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitAuthorizationHold'][0])
     {
 
         // verify the required parameter 'token_payment_request' is set
@@ -2485,6 +2530,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenMitAuthorizationHold'
             );
         }
+
 
 
 
@@ -2520,6 +2566,10 @@ class TokenPaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {
@@ -2599,6 +2649,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
@@ -2606,9 +2657,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenMitCharge($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
+    public function tokenMitCharge($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
-        list($response) = $this->tokenMitChargeWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->tokenMitChargeWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -2623,6 +2674,7 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
@@ -2630,9 +2682,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenMitChargeWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
+    public function tokenMitChargeWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
-        $request = $this->tokenMitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenMitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2803,15 +2855,16 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenMitChargeAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
+    public function tokenMitChargeAsync($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
-        return $this->tokenMitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->tokenMitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2830,16 +2883,17 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenMitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
+    public function tokenMitChargeAsyncWithHttpInfo($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenMitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenMitChargeRequest($token_payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2887,13 +2941,14 @@ class TokenPaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenMitCharge'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenMitChargeRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
+    public function tokenMitChargeRequest($token_payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenMitCharge'][0])
     {
 
         // verify the required parameter 'token_payment_request' is set
@@ -2902,6 +2957,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $token_payment_request when calling tokenMitCharge'
             );
         }
+
 
 
 
@@ -2937,6 +2993,10 @@ class TokenPaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {
@@ -3017,6 +3077,7 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
@@ -3024,9 +3085,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function tokenRevert($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevert($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
-        list($response) = $this->tokenRevertWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->tokenRevertWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -3042,6 +3103,7 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
@@ -3049,9 +3111,9 @@ class TokenPaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\TokenMITPaymentResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenRevertWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevertWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
-        $request = $this->tokenRevertRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenRevertRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3223,15 +3285,16 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenRevertAsync($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevertAsync($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
-        return $this->tokenRevertAsyncWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->tokenRevertAsyncWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3251,16 +3314,17 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenRevertAsyncWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevertAsyncWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
         $returnType = '\Paytrail\Payment\Model\TokenMITPaymentResponse';
-        $request = $this->tokenRevertRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->tokenRevertRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3309,13 +3373,14 @@ class TokenPaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevert'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenRevertRequest($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
+    public function tokenRevertRequest($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['tokenRevert'][0])
     {
 
         // verify the required parameter 'transaction_id' is set
@@ -3324,6 +3389,7 @@ class TokenPaymentsApi
                 'Missing the required parameter $transaction_id when calling tokenRevert'
             );
         }
+
 
 
 
@@ -3364,6 +3430,10 @@ class TokenPaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {

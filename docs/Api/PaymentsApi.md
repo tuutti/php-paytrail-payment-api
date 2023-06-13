@@ -85,7 +85,7 @@ No authorization required
 ## `createPayment()`
 
 ```php
-createPayment($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\PaymentRequestResponse
+createPayment($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature): \Paytrail\Payment\Model\PaymentRequestResponse
 ```
 
 Create a new open payment
@@ -111,10 +111,11 @@ $checkout_algorithm = sha512; // string | HMAC algorithm
 $checkout_method = POST; // string | HTTP method of the request
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->createPayment($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->createPayment($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling PaymentsApi->createPayment: ', $e->getMessage(), PHP_EOL;
@@ -131,6 +132,7 @@ try {
 | **checkout_method** | **string**| HTTP method of the request | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
@@ -225,7 +227,7 @@ No authorization required
 ## `getPaymentByTransactionId()`
 
 ```php
-getPaymentByTransactionId($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\Payment
+getPaymentByTransactionId($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature): \Paytrail\Payment\Model\Payment
 ```
 
 Get a payment by Checkout transaction ID
@@ -252,10 +254,11 @@ $checkout_method = GET; // string | HTTP method of the request
 $checkout_transaction_id = 93ee8d18-10db-410b-92ac-7d6e49369ce3; // string | The same transaction ID as in route
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->getPaymentByTransactionId($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->getPaymentByTransactionId($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling PaymentsApi->getPaymentByTransactionId: ', $e->getMessage(), PHP_EOL;
@@ -273,6 +276,7 @@ try {
 | **checkout_transaction_id** | **string**| The same transaction ID as in route | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type
@@ -365,7 +369,7 @@ No authorization required
 ## `refundPaymentByTransactionId()`
 
 ```php
-refundPaymentByTransactionId($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature): \Paytrail\Payment\Model\RefundResponse
+refundPaymentByTransactionId($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature): \Paytrail\Payment\Model\RefundResponse
 ```
 
 Refund a payment
@@ -393,10 +397,11 @@ $checkout_method = POST; // string | HTTP method of the request
 $checkout_transaction_id = 93ee8d18-10db-410b-92ac-7d6e49369ce3; // string | The same transaction ID as in route
 $checkout_timestamp = 2018-08-08T10:10:59Z; // \DateTime | Current timestamp in ISO 8601 format
 $checkout_nonce = 39da40b8-5fb0-499c-869d-35e575b9a6cd; // string | Unique random identifier
+$platform_name = 'platform_name_example'; // string | For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration.
 $signature = 'signature_example'; // string | HMAC signature calculated over the request headers and payload
 
 try {
-    $result = $apiInstance->refundPaymentByTransactionId($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature);
+    $result = $apiInstance->refundPaymentByTransactionId($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling PaymentsApi->refundPaymentByTransactionId: ', $e->getMessage(), PHP_EOL;
@@ -415,6 +420,7 @@ try {
 | **checkout_transaction_id** | **string**| The same transaction ID as in route | [optional] |
 | **checkout_timestamp** | **\DateTime**| Current timestamp in ISO 8601 format | [optional] |
 | **checkout_nonce** | **string**| Unique random identifier | [optional] |
+| **platform_name** | **string**| For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. | [optional] |
 | **signature** | **string**| HMAC signature calculated over the request headers and payload | [optional] |
 
 ### Return type

@@ -600,6 +600,7 @@ class PaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
@@ -607,9 +608,9 @@ class PaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\PaymentRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function createPayment($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
+    public function createPayment($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
-        list($response) = $this->createPaymentWithHttpInfo($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->createPaymentWithHttpInfo($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -624,6 +625,7 @@ class PaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
@@ -631,9 +633,9 @@ class PaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\PaymentRequestResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createPaymentWithHttpInfo($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
+    public function createPaymentWithHttpInfo($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
-        $request = $this->createPaymentRequest($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->createPaymentRequest($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -804,15 +806,16 @@ class PaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createPaymentAsync($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
+    public function createPaymentAsync($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
-        return $this->createPaymentAsyncWithHttpInfo($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->createPaymentAsyncWithHttpInfo($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -831,16 +834,17 @@ class PaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createPaymentAsyncWithHttpInfo($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
+    public function createPaymentAsyncWithHttpInfo($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
         $returnType = '\Paytrail\Payment\Model\PaymentRequestResponse';
-        $request = $this->createPaymentRequest($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->createPaymentRequest($payment_request, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -888,13 +892,14 @@ class PaymentsApi
      * @param  string $checkout_method HTTP method of the request (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayment'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createPaymentRequest($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
+    public function createPaymentRequest($payment_request, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['createPayment'][0])
     {
 
         // verify the required parameter 'payment_request' is set
@@ -903,6 +908,7 @@ class PaymentsApi
                 'Missing the required parameter $payment_request when calling createPayment'
             );
         }
+
 
 
 
@@ -938,6 +944,10 @@ class PaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {
@@ -1437,6 +1447,7 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
@@ -1444,9 +1455,9 @@ class PaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\Payment|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function getPaymentByTransactionId($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
+    public function getPaymentByTransactionId($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
-        list($response) = $this->getPaymentByTransactionIdWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->getPaymentByTransactionIdWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -1462,6 +1473,7 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
@@ -1469,9 +1481,9 @@ class PaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\Payment|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getPaymentByTransactionIdWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
+    public function getPaymentByTransactionIdWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
-        $request = $this->getPaymentByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->getPaymentByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1667,15 +1679,16 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentByTransactionIdAsync($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
+    public function getPaymentByTransactionIdAsync($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
-        return $this->getPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->getPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1695,16 +1708,17 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
+    public function getPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\Payment';
-        $request = $this->getPaymentByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->getPaymentByTransactionIdRequest($transaction_id, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1753,13 +1767,14 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getPaymentByTransactionIdRequest($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
+    public function getPaymentByTransactionIdRequest($transaction_id, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['getPaymentByTransactionId'][0])
     {
 
         // verify the required parameter 'transaction_id' is set
@@ -1768,6 +1783,7 @@ class PaymentsApi
                 'Missing the required parameter $transaction_id when calling getPaymentByTransactionId'
             );
         }
+
 
 
 
@@ -1808,6 +1824,10 @@ class PaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {
@@ -2294,6 +2314,7 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
@@ -2301,9 +2322,9 @@ class PaymentsApi
      * @throws \InvalidArgumentException
      * @return \Paytrail\Payment\Model\RefundResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error
      */
-    public function refundPaymentByTransactionId($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
+    public function refundPaymentByTransactionId($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
-        list($response) = $this->refundPaymentByTransactionIdWithHttpInfo($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        list($response) = $this->refundPaymentByTransactionIdWithHttpInfo($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
         return $response;
     }
 
@@ -2320,6 +2341,7 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
@@ -2327,9 +2349,9 @@ class PaymentsApi
      * @throws \InvalidArgumentException
      * @return array of \Paytrail\Payment\Model\RefundResponse|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error|\Paytrail\Payment\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function refundPaymentByTransactionIdWithHttpInfo($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
+    public function refundPaymentByTransactionIdWithHttpInfo($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
-        $request = $this->refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2550,15 +2572,16 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function refundPaymentByTransactionIdAsync($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
+    public function refundPaymentByTransactionIdAsync($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
-        return $this->refundPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType)
+        return $this->refundPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2579,16 +2602,17 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function refundPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
+    public function refundPaymentByTransactionIdAsyncWithHttpInfo($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
         $returnType = '\Paytrail\Payment\Model\RefundResponse';
-        $request = $this->refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $signature, $contentType);
+        $request = $this->refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account, $checkout_algorithm, $checkout_method, $checkout_transaction_id, $checkout_timestamp, $checkout_nonce, $platform_name, $signature, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2638,13 +2662,14 @@ class PaymentsApi
      * @param  string $checkout_transaction_id The same transaction ID as in route (optional)
      * @param  \DateTime $checkout_timestamp Current timestamp in ISO 8601 format (optional)
      * @param  string $checkout_nonce Unique random identifier (optional)
+     * @param  string $platform_name For SaaS services, use the marketing name of the platform (for example, shopify). For third party eCommerce platform plugins, use the platform name and your identifier, like company name (for example, woocommerce-yourcompany). Platform and integrator information helps customer service to provide better assistance for the merchants using the integration. (optional)
      * @param  string $signature HMAC signature calculated over the request headers and payload (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refundPaymentByTransactionId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
+    public function refundPaymentByTransactionIdRequest($transaction_id, $refund, $checkout_account = null, $checkout_algorithm = null, $checkout_method = null, $checkout_transaction_id = null, $checkout_timestamp = null, $checkout_nonce = null, $platform_name = null, $signature = null, string $contentType = self::contentTypes['refundPaymentByTransactionId'][0])
     {
 
         // verify the required parameter 'transaction_id' is set
@@ -2660,6 +2685,7 @@ class PaymentsApi
                 'Missing the required parameter $refund when calling refundPaymentByTransactionId'
             );
         }
+
 
 
 
@@ -2700,6 +2726,10 @@ class PaymentsApi
         // header params
         if ($checkout_nonce !== null) {
             $headerParams['checkout-nonce'] = ObjectSerializer::toHeaderValue($checkout_nonce);
+        }
+        // header params
+        if ($platform_name !== null) {
+            $headerParams['platform-name'] = ObjectSerializer::toHeaderValue($platform_name);
         }
         // header params
         if ($signature !== null) {
