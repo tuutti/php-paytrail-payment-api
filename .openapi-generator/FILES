@@ -13,6 +13,7 @@ docs/Model/Address.md
 docs/Model/BasePaymentMethodProvider.md
 docs/Model/Callbacks.md
 docs/Model/Card.md
+docs/Model/CardInfo.md
 docs/Model/Customer.md
 docs/Model/Error.md
 docs/Model/GetTokenRequest.md
@@ -56,6 +57,7 @@ src/Model/Address.php
 src/Model/BasePaymentMethodProvider.php
 src/Model/Callbacks.php
 src/Model/Card.php
+src/Model/CardInfo.php
 src/Model/Customer.php
 src/Model/Error.php
 src/Model/GetTokenRequest.php

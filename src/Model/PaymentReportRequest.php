@@ -65,7 +65,8 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'end_date' => 'string',
         'limit' => 'int',
         'report_fields' => 'string[]',
-        'submerchant' => 'int'
+        'submerchant' => 'int',
+        'include_items' => 'bool'
     ];
 
     /**
@@ -83,7 +84,8 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'end_date' => 'datetime',
         'limit' => null,
         'report_fields' => null,
-        'submerchant' => null
+        'submerchant' => null,
+        'include_items' => null
     ];
 
     /**
@@ -99,7 +101,8 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
 		'end_date' => false,
 		'limit' => false,
 		'report_fields' => false,
-		'submerchant' => false
+		'submerchant' => false,
+		'include_items' => false
     ];
 
     /**
@@ -195,7 +198,8 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'end_date' => 'endDate',
         'limit' => 'limit',
         'report_fields' => 'reportFields',
-        'submerchant' => 'submerchant'
+        'submerchant' => 'submerchant',
+        'include_items' => 'includeItems'
     ];
 
     /**
@@ -211,7 +215,8 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'end_date' => 'setEndDate',
         'limit' => 'setLimit',
         'report_fields' => 'setReportFields',
-        'submerchant' => 'setSubmerchant'
+        'submerchant' => 'setSubmerchant',
+        'include_items' => 'setIncludeItems'
     ];
 
     /**
@@ -227,7 +232,8 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'end_date' => 'getEndDate',
         'limit' => 'getLimit',
         'report_fields' => 'getReportFields',
-        'submerchant' => 'getSubmerchant'
+        'submerchant' => 'getSubmerchant',
+        'include_items' => 'getIncludeItems'
     ];
 
     /**
@@ -305,6 +311,7 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
     public const REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION_VAT_PERCENTAGE = 'shopInShopCommissionVatPercentage';
     public const REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION_VAT_AMOUNT = 'shopInShopCommissionVatAmount';
     public const REPORT_FIELDS_REFUNDITEMS = 'refunditems';
+    public const REPORT_FIELDS_TRADEITEMS = 'tradeitems';
 
     /**
      * Gets allowable values of the enum
@@ -370,6 +377,7 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
             self::REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION_VAT_PERCENTAGE,
             self::REPORT_FIELDS_SHOP_IN_SHOP_COMMISSION_VAT_AMOUNT,
             self::REPORT_FIELDS_REFUNDITEMS,
+            self::REPORT_FIELDS_TRADEITEMS,
         ];
     }
 
@@ -396,6 +404,7 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         $this->setIfExists('limit', $data ?? [], 50000);
         $this->setIfExists('report_fields', $data ?? [], null);
         $this->setIfExists('submerchant', $data ?? [], null);
+        $this->setIfExists('include_items', $data ?? [], null);
     }
 
     /**
@@ -714,6 +723,33 @@ class PaymentReportRequest implements ModelInterface, ArrayAccess, \JsonSerializ
             throw new \InvalidArgumentException('non-nullable submerchant cannot be null');
         }
         $this->container['submerchant'] = $submerchant;
+
+        return $this;
+    }
+
+    /**
+     * Gets include_items
+     *
+     * @return bool|null
+     */
+    public function getIncludeItems()
+    {
+        return $this->container['include_items'];
+    }
+
+    /**
+     * Sets include_items
+     *
+     * @param bool|null $include_items Include trade items in created payment report
+     *
+     * @return self
+     */
+    public function setIncludeItems($include_items)
+    {
+        if (is_null($include_items)) {
+            throw new \InvalidArgumentException('non-nullable include_items cannot be null');
+        }
+        $this->container['include_items'] = $include_items;
 
         return $this;
     }

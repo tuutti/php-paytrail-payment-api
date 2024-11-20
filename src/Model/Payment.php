@@ -67,7 +67,8 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
         'href' => 'string',
         'provider' => 'string',
         'filing_code' => 'string',
-        'paid_at' => 'string'
+        'paid_at' => 'string',
+        'card_info' => '\Paytrail\Payment\Model\CardInfo'
     ];
 
     /**
@@ -88,7 +89,8 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
         'href' => 'url',
         'provider' => null,
         'filing_code' => null,
-        'paid_at' => null
+        'paid_at' => null,
+        'card_info' => null
     ];
 
     /**
@@ -107,7 +109,8 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
 		'href' => false,
 		'provider' => false,
 		'filing_code' => false,
-		'paid_at' => false
+		'paid_at' => false,
+		'card_info' => false
     ];
 
     /**
@@ -206,7 +209,8 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
         'href' => 'href',
         'provider' => 'provider',
         'filing_code' => 'filingCode',
-        'paid_at' => 'paidAt'
+        'paid_at' => 'paidAt',
+        'card_info' => 'cardInfo'
     ];
 
     /**
@@ -225,7 +229,8 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
         'href' => 'setHref',
         'provider' => 'setProvider',
         'filing_code' => 'setFilingCode',
-        'paid_at' => 'setPaidAt'
+        'paid_at' => 'setPaidAt',
+        'card_info' => 'setCardInfo'
     ];
 
     /**
@@ -244,7 +249,8 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
         'href' => 'getHref',
         'provider' => 'getProvider',
         'filing_code' => 'getFilingCode',
-        'paid_at' => 'getPaidAt'
+        'paid_at' => 'getPaidAt',
+        'card_info' => 'getCardInfo'
     ];
 
     /**
@@ -351,6 +357,7 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('provider', $data ?? [], null);
         $this->setIfExists('filing_code', $data ?? [], null);
         $this->setIfExists('paid_at', $data ?? [], null);
+        $this->setIfExists('card_info', $data ?? [], null);
     }
 
     /**
@@ -744,6 +751,33 @@ class Payment implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable paid_at cannot be null');
         }
         $this->container['paid_at'] = $paid_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets card_info
+     *
+     * @return \Paytrail\Payment\Model\CardInfo|null
+     */
+    public function getCardInfo()
+    {
+        return $this->container['card_info'];
+    }
+
+    /**
+     * Sets card_info
+     *
+     * @param \Paytrail\Payment\Model\CardInfo|null $card_info card_info
+     *
+     * @return self
+     */
+    public function setCardInfo($card_info)
+    {
+        if (is_null($card_info)) {
+            throw new \InvalidArgumentException('non-nullable card_info cannot be null');
+        }
+        $this->container['card_info'] = $card_info;
 
         return $this;
     }

@@ -12,5 +12,6 @@ Name | Type | Description | Notes
 **limit** | **int** | Limit the amount of payments included in the report. | [optional] [default to 50000]
 **report_fields** | **string[]** | Limit the amount of fields included in the report. By default all fields are included. | [optional]
 **submerchant** | **int** | Get submerchant&#39;s payment report | [optional]
+**include_items** | **bool** | Include trade items in created payment report | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

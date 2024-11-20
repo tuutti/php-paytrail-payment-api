@@ -59,7 +59,7 @@ class Item implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'unit_price' => 'int',
         'units' => 'int',
-        'vat_percentage' => 'int',
+        'vat_percentage' => 'float',
         'product_code' => 'string',
         'delivery_date' => '\DateTime',
         'description' => 'string',
@@ -81,7 +81,7 @@ class Item implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPIFormats = [
         'unit_price' => 'int64',
         'units' => 'int64',
-        'vat_percentage' => 'int64',
+        'vat_percentage' => 'float',
         'product_code' => null,
         'delivery_date' => 'date',
         'description' => null,
@@ -503,7 +503,7 @@ class Item implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets vat_percentage
      *
-     * @return int
+     * @return float
      */
     public function getVatPercentage()
     {
@@ -513,7 +513,7 @@ class Item implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets vat_percentage
      *
-     * @param int $vat_percentage Item VAT percentage
+     * @param float $vat_percentage Item VAT percentage
      *
      * @return self
      */

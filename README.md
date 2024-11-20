@@ -107,6 +107,7 @@ Class | Method | HTTP request | Description
 - [BasePaymentMethodProvider](docs/Model/BasePaymentMethodProvider.md)
 - [Callbacks](docs/Model/Callbacks.md)
 - [Card](docs/Model/Card.md)
+- [CardInfo](docs/Model/CardInfo.md)
 - [Customer](docs/Model/Customer.md)
 - [Error](docs/Model/Error.md)
 - [GetTokenRequest](docs/Model/GetTokenRequest.md)
